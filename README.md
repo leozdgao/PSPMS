@@ -1,8 +1,6 @@
 
 ## Introduction
 
----
-
 #### My first MEAN Stack project
 
 I start this project on 2014.8
@@ -37,7 +35,5 @@ copy templates and concat js file.
     
 
 ## License
-
----
 
 MIT
