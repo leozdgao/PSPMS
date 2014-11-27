@@ -22,8 +22,9 @@ module.exports = function(grunt){
         copy: {
             html: {
                 expand: true,
-                flatten: true,
-                src: "app/src/**",
+//                flatten: true,
+                cwd: "app/src/",
+                src: "**",
                 dest: "public/templates/",
                 filter: function(path){
                     return /.html$/.test(path);
@@ -40,5 +41,5 @@ module.exports = function(grunt){
     });
 
     grunt.registerTask('build', ['copy', 'concat']);
-    grunt.registerTask('server', ['build', 'express']);
+    grunt.registerTask('server', ['build', 'express:dev']);
 }
