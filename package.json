@@ -1,6 +1,7 @@
 {
   "name": "PSPMS",
   "description": "I start this project on 2014.8, and now this is a refactor version.Single Page Application(SPA) for my team projects management sites.",
+  "repository": "https://github.com/leozdgao/PSPMS.git",
   "version": "1.0.0",
   "private": true,
   "scripts": {
