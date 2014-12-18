@@ -20,6 +20,7 @@ module.exports = function(grunt){
             }
         },
         copy: {
+            //build template
             html: {
                 expand: true,
 //                flatten: true,
@@ -28,6 +29,15 @@ module.exports = function(grunt){
                 dest: "public/templates/",
                 filter: function(path){
                     return /.html$/.test(path);
+                }
+            },
+            public: {
+                expand: true,
+                cwd: "app/public/",
+                src: "**",
+                dest: "public/",
+                filter: function(path){
+                    return path.indexOf('mock') <= -1;
                 }
             }
         },
