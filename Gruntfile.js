@@ -31,12 +31,14 @@ module.exports = function(grunt){
                     return /.html$/.test(path);
                 }
             },
+            //build public folder
             public: {
                 expand: true,
                 cwd: "app/public/",
                 src: "**",
                 dest: "public/",
                 filter: function(path){
+                    //exclude angular-mocks
                     return path.indexOf('mock') <= -1;
                 }
             }
