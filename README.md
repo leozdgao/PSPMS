@@ -9,7 +9,9 @@ I start this project on 2014.8
 
 Single Page Application(SPA) for my team projects management sites.
 
-- Use grunt to manage my file structure.
+- Use Grunt to manage my file structure.
+
+- Use Karma for unit test
 
 - Use MongoDB(Mongoose) for data storage
 
@@ -19,9 +21,12 @@ Single Page Application(SPA) for my team projects management sites.
 
 - Use Node.js to create a proxy to request data from other site
 
-TODO: auto-test part, may use karma or mocha
 
 #### Grunt
+
+To test source of app, you can use this commond:
+
+    $grunt test
 
 To start server, you can just use this commond:
 
@@ -29,7 +34,7 @@ To start server, you can just use this commond:
 
 I put my app source code in the folder named 'app', but the reference path of my files
 is in the folder named 'public'. Use this command to build file structure, including
-copy templates and concat js file.
+copy templates and public files and concat js or css file.
 
     $grunt build
     

@@ -49,9 +49,15 @@ module.exports = function(grunt){
                     script: "app.js"
                 }
             }
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
         }
     });
 
+    grunt.registerTask('test', ['karma:unit']);
     grunt.registerTask('build', ['copy', 'concat']);
     grunt.registerTask('server', ['build', 'express:dev']);
 }
