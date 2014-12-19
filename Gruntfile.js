@@ -5,18 +5,12 @@ module.exports = function(grunt){
     grunt.initConfig({
         concat: {
             js: {
-                src: 'app/src/**',
-                dest: 'public/javascripts/app.js',
-                filter: function(path){
-                    return /.js$/.test(path);
-                }
+                src: 'app/src/**/*.js',
+                dest: 'public/javascripts/app.js'
             },
             css: {
-                src: 'app/src/**',
-                dest: 'public/stylesheets/style.css',
-                filter: function(path){
-                    return /.css$/.test(path);
-                }
+                src: 'app/src/**/*.css',
+                dest: 'public/stylesheets/style.css'
             }
         },
         copy: {
@@ -25,11 +19,8 @@ module.exports = function(grunt){
                 expand: true,
 //                flatten: true,
                 cwd: "app/src/",
-                src: "**",
-                dest: "public/templates/",
-                filter: function(path){
-                    return /.html$/.test(path);
-                }
+                src: "**/*.html",
+                dest: "public/templates/"
             },
             //build public folder
             public: {
