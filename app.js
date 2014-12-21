@@ -1,16 +1,23 @@
 var express = require('express');
+var app = express();
+
 var path = require('path');
+
+//get configuration
+var config = require('./config.json');
+app.set('port', process.env.PORT || 3000);
+
+//set view engine
+var exphbs = require('express-handlebars');
+app.engine('hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
+//requrie middlewares
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var app = express();
-
-var config = require('./config');
-
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -36,8 +43,9 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
-        message: err.message,
-        error: {}
+    	title: 'Error in PSPMS',
+        error: err,
+        layout: 'noscript'
     });
 });
 
