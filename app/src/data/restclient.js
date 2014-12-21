@@ -7,6 +7,7 @@ angular.module('app.datacenter', [])
 			var cache = {};
 
 			return {
+				
 			}
 		},
 		appcache: true,
