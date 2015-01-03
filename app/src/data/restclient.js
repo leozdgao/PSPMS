@@ -4,7 +4,7 @@ angular.module("app.datacenter", ["ngResource"])
 	return $resource("/proxy/rest/company", null, {
 		get: { method: "GET", isArray: true, headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }, cache: true },
 		insert: { method: "POST" },
-		update: { method: "PUT"},
+		update: { method: "PUT" },
 		remove: { method: "DELETE" }
 	});
 }])
@@ -13,7 +13,7 @@ angular.module("app.datacenter", ["ngResource"])
 	return $resource("/proxy/rest/project", null, {
 		get: { method: "GET", isArray: true, headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }, cache: true },
 		insert: { method: "POST" },
-		update: { method: "PUT"},
+		update: { method: "PUT" },
 		remove: { method: "DELETE" }
 	});
 }]);
