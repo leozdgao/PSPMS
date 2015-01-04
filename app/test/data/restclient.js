@@ -4,6 +4,7 @@ describe("restclient", function() {
 
 	beforeEach(module('app.datacenter'));
 	beforeEach(inject(function(_$httpBackend_, _Company_) {
+
 		$httpBackend = _$httpBackend_;
 		Company = _Company_;
 		//Project = _Project_;
@@ -13,6 +14,7 @@ describe("restclient", function() {
 	}));
 
 	it("use method 'get' to get Company", function() {
+
 		$httpBackend.expectGET("/proxy/rest/company?companyId=1080")
 			.respond([{companyId: 1080, name: "test"}]);
 

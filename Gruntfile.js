@@ -45,6 +45,12 @@ module.exports = function(grunt){
             unit: {
                 configFile: 'karma.conf.js'
             }
+        },
+        watch: {
+            js: {
+                files: [ 'app/src/**/*.js' ],
+                tasks: [ 'build' ]
+            }
         }
     });
 

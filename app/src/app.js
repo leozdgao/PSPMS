@@ -1,5 +1,5 @@
 //var app = angular.module("pspms", ['ui.router', 'ui.bootstrap', 'app.info', 'app.report']);
-var app = angular.module("pspms", ['ui.router', 'app.directives', 'app.datacenter']);
+var app = angular.module("pspms", ['ui.router', 'app.directives', 'app.datacenter', 'app.auth']);
 
 app.run(["$rootScope", "$state", "$stateParams", function($rootScope, $state, $stateParams){
     $rootScope.$stateParams = $stateParams;
@@ -28,10 +28,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");
 });
 
-//app.controller("TestController", ["$scope", "Company", 
-//	function($scope, Company) {
-//		Company.get({companyId: 1080}).$promise.then(function(data) {
-//			console.log(data);
-//		});
-//	}
-//]);
+// app.controller("TestController", ["$scope", "Company", 
+// 	function($scope, Company) {
+// 		Company.get({companyId: 1080}).$promise.then(function(data) {
+// 			console.log(data);
+// 		});
+// 	}
+// ]);

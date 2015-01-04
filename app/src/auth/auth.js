@@ -1,81 +1,120 @@
-angular.module("app.authentication", [])
+angular.module("app.auth", [])
 
 .constant("Role", {
 	guest: 0,
 	member: 1,
-	leader: 2
+	leader: 2,
+	admin: -1
 })
 
-.provider("AuthServiceProvider", ["$http", "$q", "Role",
-	function($http, $q, Role) {
+// [Interceptor] add token to request params
+.factory('AuthTokenInterceptor', ['$q', 'UserService', 
+	function($q, UserService){
 		return {
-			$get: function() {
+			request: function(config) {
+				var token = UserService.getToken();
+				if(angular.isDefined(token)) {
+					config.params = config.params || {};
+					config.params.token = token;
+				}
 
-				// [Description]
-				// - object for current user
-				// [Properties]
-				// - uid
-				// - role
-				// - token
-				var user;
+				return config;
+			}
+		};
+	}
+])
 
-				return {
-					login: function(uid, pwd) {
+.factory('UserService', [function(){
+	var user;
 
-						var defer = $q.defer();
-						var url = this.authUrl.login;
+	return {
+		getUser: function() {
+			return user;
+		},
+		getToken: function() {
+			var u = user || {};
+			return u.token;
+		},
+		setUser: function(newUser) {
+			user = newUser;
+			// angular.copy(newUser, user);
+		}
+	}
+}])
 
-						$http.post(url, {
-							uid: uid, pwd: pwd
-						}).success(function(data) {
-							user = data;
-							defer.resolve(data);
-						}).error(function(err) {
-							defer.reject(err);
-						});
+.provider("AuthService",
+	function() {
+		$get.$inject = ["$http", "$q", "UserService"];
+		this.$get = $get;
 
-						return defer.promise;
-					},
-					logout: function() {
+		this.authUrl = {
+			login: "http://localhost:3000/user/login",
+			logout: "http://localhost:3000/user/logout"
+		}
 
-						var defer = $q.defer();
-						var url = this.authUrl.logout;
+		var self = this;
+		function $get($http, $q, UserService){
 
+			// [Description]
+			// - object for current user
+			// [Properties]
+			// - uid
+			// - role
+			// - token
+
+			return {
+				login: function(uid, pwd) {
+
+					var defer = $q.defer();
+					var url = self.authUrl.login;
+
+					$http.post(url, {
+						uid: uid, pwd: pwd
+					}).success(function(data) {
+						UserService.setUser(data);
+						defer.resolve(data);
+					}).error(function(err) {
+						defer.reject(err);
+					});
+
+					return defer.promise;
+				},
+				logout: function() {
+
+					var defer = $q.defer();
+					var url = self.authUrl.logout;
+					var user = UserService.getUser();
+
+					if(user && user.token) {
 						$http.get(url).success(function() {
-							user = void(0);
+							UserService.setUser(void(0));
 							defer.resolve();
 						}).error(function(err) {
 							defer.reject(err);
 						});
+					}
+					else {
+						defer.reject(new Error("Can't get current user."));
+					}
 
-						return defer.promise;
-					},
-					isAuthenticated: function(role) {
+					return defer.promise;
+				},
+				isAuthenticated: function(role) {
+					var user = UserService.getUser();
 
-						if(typeof user == "undefined") {
-							return false;
-						}
+					if(typeof user == "undefined") {
+						return false;
+					}
 
-						if(typeof role == "undefined") {
-							return true;
-						} 
-						else {
-							return user.role >= role;
-						}
-					},
-					getCurrentUser: function() {
-						return user;
-					},
-					getToken: function() {
-						var cur = user || {};
-						return cur.token;
+					if(typeof role == "undefined") {
+						return true;
+					} 
+					else {
+						return user.role >= role;
 					}
 				}
-			},
-			authUrl: {
-				login: "",
-				logout: ""
 			}
 		}
 	}
-])
+)
+

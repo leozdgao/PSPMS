@@ -27,9 +27,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
+var userRoute = require('./routes/user');
 //var proxy = require('./routes/proxy');
 
 app.use('/', routes);
+app.use('/user', userRoute);
 //app.use('/proxy', proxy);
 
 // catch 404 and forward to error handler
