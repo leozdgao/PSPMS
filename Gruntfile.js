@@ -50,6 +50,10 @@ module.exports = function(grunt){
             js: {
                 files: [ 'app/src/**/*.js' ],
                 tasks: [ 'build' ]
+            },
+            html: {
+                files: [ 'app/src/**/*.html' ],
+                tasks: [ 'build' ]
             }
         }
     });

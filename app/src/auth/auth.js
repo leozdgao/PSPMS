@@ -35,6 +35,10 @@ angular.module("app.auth", [])
 			var u = user || {};
 			return u.token;
 		},
+		getRole: function() {
+			var u = user || {};
+			return u.role;
+		},
 		setUser: function(newUser) {
 			user = newUser;
 			// angular.copy(newUser, user);

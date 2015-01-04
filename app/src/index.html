@@ -11,7 +11,7 @@
                 <li ui-sref-active="active">
                     <a ui-sref="index">Info</a>
                 </li>
-                <li ui-sref-active="active">
+                <li ui-sref-active="active" ng-if="auth.isMember()">
                     <a ui-sref="report">Report</a>
                 </li>
             </ul>
