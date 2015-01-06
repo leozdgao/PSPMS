@@ -1,5 +1,5 @@
 //var app = angular.module("pspms", ['ui.router', 'ui.bootstrap', 'app.info', 'app.report']);
-var app = angular.module("pspms", ['ui.router', 'app.directives', 'app.datacenter', 'app.auth']);
+var app = angular.module("pspms", ['ui.router', 'app.directives', 'app.auth']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "AuthService", "UserService", "MessageBox",
 	function($rootScope, $state, $stateParams, $location, AuthService, UserService, MessageBox){
@@ -13,6 +13,10 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "AuthService", "Us
 	    	},
 	    	isLeader: function() {
 	    		return AuthService.isAuthenticated(2);
+	    	},
+	    	isAdmin: function() {
+	    		var role = UserService.getRole();
+	    		return angular.isDefined(role) && role <= -1;
 	    	}
 	    }
 
@@ -38,9 +42,7 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "AuthService", "Us
 	}
 ]);
 
-//app.constant('SERVER', '/proxy/');
-
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServiceProvider) {
 	$stateProvider.state("index", {
 		url: "/",
 		views: {
@@ -68,12 +70,38 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 
 	$urlRouterProvider.otherwise("/");
+	
+	$httpProvider.interceptors.push("AuthTokenInterceptor");
+
+	AuthServiceProvider.authUrl.login = "/user/login";
+	AuthServiceProvider.authUrl.logout = "/user/logout";
 });
 
-// app.controller("TestController", ["$scope", "Company", 
-// 	function($scope, Company) {
-// 		Company.get({companyId: 1080}).$promise.then(function(data) {
-// 			console.log(data);
-// 		});
-// 	}
-// ]);
+app.controller("NavBarController", ["$scope", "$state", "LoginPanel", "AuthService", "UserService", "MessageBox",
+	function($scope, $state, LoginPanel, AuthService, UserService, MessageBox) {
+		
+		$scope.showLoginPanel = function() {
+
+			LoginPanel.show(AuthService.login)
+			//after a successful login
+			.then(function(user) {
+
+				//update navbar
+				// $state.reload();
+				$scope.user = UserService.getUser();
+			});
+		}
+
+		$scope.logout = function() {
+			AuthService.logout()
+			.then(function() {
+				$scope.user = UserService.getUser();
+			})
+			.catch(function() {
+				MessageBox.show("Error occurred while logging out.");
+			})
+		}
+
+		$scope.user = UserService.getUser();
+	}
+]);

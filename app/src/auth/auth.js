@@ -41,7 +41,6 @@ angular.module("app.auth", [])
 		},
 		setUser: function(newUser) {
 			user = newUser;
-			// angular.copy(newUser, user);
 		}
 	}
 }])
@@ -75,7 +74,7 @@ angular.module("app.auth", [])
 					$http.post(url, {
 						uid: uid, pwd: pwd
 					}).success(function(data) {
-						UserService.setUser(data);
+						UserService.setUser(data.user);
 						defer.resolve(data);
 					}).error(function(err) {
 						defer.reject(err);
