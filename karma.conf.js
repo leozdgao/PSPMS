@@ -1,11 +1,10 @@
-// Karma configuration
-// Generated on Thu Dec 18 2014 23:39:52 GMT+0800 (CST)
+var files = require("./files");
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'app',
+    basePath: '',
 
 
     // frameworks to use
@@ -14,15 +13,16 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
-      'public/javascripts/vendors/angular.min.js',
-      'public/javascripts/vendors/angular-resource.min.js',
-      //'vendors/angular-ui-router.min.js',
-      'public/javascripts/vendors/ui-bootstrap.min.js',
-      'public/javascripts/vendors/angular-mocks.js',
-      'src/**/*.js',
-      'test/**/*.js'
-    ],
+    files: [].concat(files.vendor, files.src, files.test),
+    // files: [
+    //   'public/javascripts/vendors/angular.min.js',
+    //   'public/javascripts/vendors/angular-resource.min.js',
+    //   //'vendors/angular-ui-router.min.js',
+    //   'public/javascripts/vendors/ui-bootstrap.min.js',
+    //   'public/javascripts/vendors/angular-mocks.js',
+    //   'src/**/*.js',
+    //   'test/**/*.js'
+    // ],
 
 
     // list of files to exclude

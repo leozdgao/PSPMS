@@ -14,6 +14,9 @@
                 <li ui-sref-active="active" ng-if="auth.isMember()">
                     <a ui-sref="report">Report</a>
                 </li>
+                <li ui-sref-active="active" ng-if="auth.isAdmin()">
+                    <a ui-sref="admin">Manage</a>
+                </li>
             </ul>
 
             <!-- not auth -->

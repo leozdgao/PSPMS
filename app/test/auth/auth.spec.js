@@ -32,7 +32,7 @@ describe("authentication", function() {
 	it("perform user authentication", function() {
 
 		$httpBackend.expectPOST("/user/login", {uid: "test", pwd: "123"})
-			.respond({name: "test", role: 1, token: "123456"});
+			.respond({user: {name: "test", role: 1, token: "123456"}});
 		$httpBackend.expectGET("/user/logout?token=123456")
 			.respond({success: 1});
 

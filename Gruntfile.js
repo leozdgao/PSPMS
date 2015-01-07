@@ -1,3 +1,5 @@
+var files = require("./files");
+
 module.exports = function(grunt){
     //load all dep grunt-plugins
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -5,7 +7,7 @@ module.exports = function(grunt){
     grunt.initConfig({
         concat: {
             js: {
-                src: 'app/src/**/*.js',
+                src: [].concat(files.src),
                 dest: 'public/javascripts/app.js'
             },
             css: {

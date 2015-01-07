@@ -51,8 +51,14 @@ app.use(function(err, req, res, next) {
     });
 });
 
-var debug = require('debug')('server');
+// var debug = require('debug')('server');
+var mongoose = require('mongoose');
 
-var server = app.listen(app.get('port'), function() {
-    debug('Express server listening on port ' + server.address().port);
+mongoose.connect('mongodb://10.10.73.207:27017, 10.10.73.208:27017/PSPMS_Dev?replicaSet=pspms', function() {
+
+    var server = app.listen(app.get('port'), function() {
+        console.log('Express server listening on port ' + server.address().port);
+    });    
 });
+
+
