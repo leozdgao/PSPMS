@@ -29,11 +29,7 @@ module.exports = function(grunt){
                 expand: true,
                 cwd: "app/public/",
                 src: "**",
-                dest: "public/",
-                filter: function(path){
-                    //exclude angular-mocks
-                    return path.indexOf('mock') <= -1;
-                }
+                dest: "public/"
             }
         },
         express: {
@@ -45,7 +41,8 @@ module.exports = function(grunt){
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js'
+                configFile: 'karma.conf.js',
+                singleRun: true
             }
         },
         watch: {

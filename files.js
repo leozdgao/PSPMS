@@ -13,6 +13,7 @@ module.exports = {
 		"app/src/report/**/*.js"
 	],
 	test: [
+		"app/test/lib/angular-mocks.js",
 		"app/test/**/*.js"
 	],
 	vendor: [
