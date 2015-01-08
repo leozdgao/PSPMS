@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+var connect = require("connect");
+var router = connect();
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'PSPMS' });
+router.use('/', function(req, res) {
+
+	console.log(req.url);
+
+	require("fs").createReadStream("views/index.html").pipe(res);
 });
 
 module.exports = router;

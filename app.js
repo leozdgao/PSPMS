@@ -1,64 +1,22 @@
-var express = require('express');
-var app = express();
+var connect = require("connect");
+var app = connect();
 
 var path = require('path');
 
-//get configuration
+// use logger
+app.use(require('morgan')('dev'));
+// set static file server
+app.use(require('serve-static')(path.join(__dirname, 'public')));
+// app.use(express.static());
+
+// proxy
 var config = require('./config.json');
-app.set('port', process.env.PORT || 3000);
+if(config.proxy) app.use(require('./routes/proxy'));
 
-//set view engine
-var exphbs = require('express-handlebars');
-app.engine('hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+// routers
+app.use('/', require('./routes/index'));
 
-//requrie middlewares
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-var routes = require('./routes/index');
-var userRoute = require('./routes/user');
-var proxy = require('./routes/proxy');
-
-app.use('/', routes);
-app.use('/user', userRoute);
-app.use('/proxy', proxy);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+var server = app.listen(process.env.PORT || 3000, function() {
+    console.log('Express server listening on port ' + server.address().port);
 });
-
-// error handlers
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-    	title: 'Error in PSPMS',
-        error: err,
-        layout: 'noscript'
-    });
-});
-
-// var debug = require('debug')('server');
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://10.10.73.207:27017, 10.10.73.208:27017/PSPMS_Dev?replicaSet=pspms', function() {
-
-    var server = app.listen(app.get('port'), function() {
-        console.log('Express server listening on port ' + server.address().port);
-    });    
-});
-
 

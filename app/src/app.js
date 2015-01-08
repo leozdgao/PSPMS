@@ -49,7 +49,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 			url: "/",
 			views: {
 				"": {
-					templateUrl: "templates/index.html"
+					templateUrl: "/templates/index.html"
 				}
 			},
 			access_control: 0
@@ -58,7 +58,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 	        url: "/report",
 	        views: {
 	            "": {
-					templateUrl: "templates/index.html"
+					templateUrl: "/templates/index.html"
 				}				
 	        },
 	        access_control: 1
@@ -67,10 +67,10 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 	    	url: "/admin",
 	    	views: {
 	    		"": {
-	    			templateUrl: "templates/index.html"
+	    			templateUrl: "/templates/index.html"
 	    		},
 	    		"general@admin": {
-					templateUrl: "templates/admin/index.html"
+					templateUrl: "/templates/admin/index.html"
 				}
 	    	},
 	    	access_control: -1

@@ -16,7 +16,7 @@ angular.module('app.directives')
                 angular.extend(option, opt);
 
                 modalInstance = $modal.open({
-                    templateUrl: 'templates/directives/messagebox/template.html',
+                    templateUrl: '/templates/directives/messagebox/template.html',
                     controller: 'MessageBoxController',
                     resolve: {
                         item: function() {

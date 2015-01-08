@@ -1,24 +1,34 @@
-var express = require('express');
-var router = express.Router();
+var connect = require("connect");
+var router = connect();
 
 var request = require("request");
 var url = require("url");
 
-var config = require("./../config.json");
+var proxyDic = require("./../config.json").proxyDic || {};
 
-router.use(function(req, res) {
-	var reqUrl = url.resolve("http://10.10.73.207:3000/", req.url);
+for (var key in proxyDic) {
 
-	var option = {
-		url: reqUrl,
-		method: req.method,
-		headers: req.headers
-	};
-
-	request(option, function(err, pres) {
-
-		res.set(pres.headers).status(pres.statusCode).end(pres.body);
-	});
-})
+	router.use(key, proxyHandler(proxyDic[key]));
+}
 
 module.exports = router;
+
+function proxyHandler(path) {
+
+	return function(req, res, next) {
+
+		// console.log('message');
+
+		var reqUrl = url.resolve(path, req.originalUrl);
+
+		console.log(reqUrl);
+
+		var option = {
+			url: reqUrl,
+			method: req.method,
+			headers: req.headers,
+		};
+
+		req.pipe(request(option)).pipe(res);
+	}
+}
