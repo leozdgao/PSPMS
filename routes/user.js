@@ -4,6 +4,11 @@ var router = express.Router();
 var Promise = require("bluebird");
 var AccountController = require("../controllers/accountController");
 
+var bodyParser = require('body-parser');
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false }));
+
 // code:
 // - 0  success
 // - 1  wrong uid or pwd
