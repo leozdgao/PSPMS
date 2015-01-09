@@ -33,10 +33,10 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "AuthService", "Us
 
 	    		if(ac && !AuthService.isAuthenticated(ac)) {
 	    			MessageBox
-	    			.show("You have no access to it.")
-	    			.then(function() {
-	    				$location.path(from.url);
-	    			});
+		    			.show("You have no access to it.")
+		    			.then(function() {
+		    				$location.path(from.url);
+		    			});
 	    		}
 	    	}
 	    });
@@ -144,7 +144,7 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
 				.catch(function(err) {
 					
 					//session expired
-					if(err.code == 3)
+					if(err && err.code == 3)
 						delete $cookies.token;
 				});
 			}

@@ -17,18 +17,20 @@ function proxyHandler(path) {
 
 	return function(req, res, next) {
 
-		// console.log('message');
-
-		var reqUrl = url.resolve(path, req.originalUrl);
-
-		console.log(reqUrl);
-
 		var option = {
-			url: reqUrl,
+			url: url.resolve(path, req.originalUrl),
 			method: req.method,
 			headers: req.headers,
 		};
 
-		req.pipe(request(option)).pipe(res);
+		var proxy = request(option);
+		// handle proxy exception
+		proxy.on("error", function(err) {
+			
+			res.statusCode = 500;
+			res.end();
+		});
+
+		req.pipe(proxy).pipe(res);
 	}
 }

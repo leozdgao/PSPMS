@@ -12,7 +12,9 @@ angular.module("app.directives")
 					onLogin: function() {
 						return onLogin;
 					}
-				}
+				},
+                backdrop: 'static',
+                keyboard: false
 			});
 
 			return modalInstance.result;
@@ -38,19 +40,19 @@ angular.module("app.directives")
 					$scope.form.requesting = true;
 
 					onLogin($scope.form.user, $scope.form.password)
-					.then(function(user) {
+						.then(function(user) {
 
-						//resolved by user
-						$modalInstance.close(user);
-					})
-					.catch(function(err) {
+							//resolved by user
+							$modalInstance.close(user);
+						})
+						.catch(function(err) {
 
-						$scope.form.message = err.msg || "Login failed."
-					})
-					.finally(function() {
-						$scope.form.submitted = false;
-						$scope.form.requesting = false;
-					})
+							$scope.form.message = err ? (err.msg || "Login failed."): "Login failed.";
+						})
+						.finally(function() {
+							$scope.form.submitted = false;
+							$scope.form.requesting = false;
+						});
 				}	
 			},
 			isInvalid: function(target, type) {
@@ -58,6 +60,9 @@ angular.module("app.directives")
 
 				if((target.$dirty || $scope.form.submitted) && target.$error[type]) return true;
 				else return false;
+			},
+			close: function() {
+				$modalInstance.dismiss();
 			}
 		}
 
