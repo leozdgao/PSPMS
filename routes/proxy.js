@@ -21,6 +21,7 @@ function proxyHandler(path) {
 			url: url.resolve(path, req.originalUrl),
 			method: req.method,
 			headers: req.headers,
+			timeout: 5000 //5s timeout
 		};
 
 		var proxy = request(option);
