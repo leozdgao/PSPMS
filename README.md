@@ -13,13 +13,9 @@ Single Page Application(SPA) for my team projects management sites.
 
 - Use Karma for unit test
 
-- Use MongoDB(Mongoose) for data storage
-
-- Use Express for my web framework(may try koa later)
-
 - Use AngularJs with Bootstrap, UI-routes and UIBootstrap in AngularUI to create my application.
 
-- Use Node.js to create a proxy to request data from other site
+- Use Connect to build my project and proxy the request. Here is [my restful server project](https://github.com/leozdgao/PSPMS_Service)
 
 
 #### Grunt

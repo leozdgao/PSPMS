@@ -1,6 +1,7 @@
 {
     "proxy": true,
     "proxyDic": {
+    	"/user": "http://localhost:4000",
         "/rest": "http://10.10.73.207:3000",
         "/file": "http://10.10.73.207:3000",
         "/Services": "http://10.10.73.208:9001"

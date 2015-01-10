@@ -33,10 +33,10 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "AuthService", "Us
 
 	    		if(ac && !AuthService.isAuthenticated(ac)) {
 	    			MessageBox
-	    			.show("You have no access to it.")
-	    			.then(function() {
-	    				$location.path(from.url);
-	    			});
+		    			.show("You have no access to it.")
+		    			.then(function() {
+		    				$location.path(from.url);
+		    			});
 	    		}
 	    	}
 	    });
@@ -49,7 +49,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 			url: "/",
 			views: {
 				"": {
-					templateUrl: "templates/index.html"
+					templateUrl: "/templates/index.html"
 				}
 			},
 			access_control: 0
@@ -58,7 +58,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 	        url: "/report",
 	        views: {
 	            "": {
-					templateUrl: "templates/index.html"
+					templateUrl: "/templates/index.html"
 				}				
 	        },
 	        access_control: 1
@@ -67,10 +67,10 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, AuthServ
 	    	url: "/admin",
 	    	views: {
 	    		"": {
-	    			templateUrl: "templates/index.html"
+	    			templateUrl: "/templates/index.html"
 	    		},
 	    		"general@admin": {
-					templateUrl: "templates/admin/index.html"
+					templateUrl: "/templates/admin/index.html"
 				}
 	    	},
 	    	access_control: -1
@@ -144,7 +144,7 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
 				.catch(function(err) {
 					
 					//session expired
-					if(err.code == 3)
+					if(err && err.code == 3)
 						delete $cookies.token;
 				});
 			}
