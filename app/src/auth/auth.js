@@ -41,7 +41,6 @@ angular.module("app.auth", [])
 		},
 		setUser: function(newUser) {
 			user = newUser;
-			// angular.copy(newUser, user);
 		}
 	}
 }])
@@ -52,8 +51,9 @@ angular.module("app.auth", [])
 		this.$get = $get;
 
 		this.authUrl = {
-			login: "http://localhost:3000/user/login",
-			logout: "http://localhost:3000/user/logout"
+			login: "/user/login",
+			logout: "/user/logout",
+			relog: "/user/relog"
 		}
 
 		var self = this;
@@ -75,7 +75,7 @@ angular.module("app.auth", [])
 					$http.post(url, {
 						uid: uid, pwd: pwd
 					}).success(function(data) {
-						UserService.setUser(data);
+						UserService.setUser(data.user);
 						defer.resolve(data);
 					}).error(function(err) {
 						defer.reject(err);
@@ -90,7 +90,9 @@ angular.module("app.auth", [])
 					var user = UserService.getUser();
 
 					if(user && user.token) {
-						$http.get(url).success(function() {
+						$http.get(url, {
+							headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }
+						}).success(function() {
 							UserService.setUser(void(0));
 							defer.resolve();
 						}).error(function(err) {
@@ -116,6 +118,26 @@ angular.module("app.auth", [])
 					else {
 						return user.role >= role;
 					}
+				},
+				relog: function(token) {
+
+					var defer = $q.defer();
+					var url = self.authUrl.relog;
+
+					$http.get(url, {
+						params: { token: token },
+						headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }
+					}).success(function(user) {
+
+						UserService.setUser(user);
+						
+						defer.resolve(user);
+					}).error(function() {
+
+						defer.reject();
+					});
+
+					return defer.promise;
 				}
 			}
 		}

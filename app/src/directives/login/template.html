@@ -1,0 +1,30 @@
+<div class="modal-body container-fluid">
+	<form class="form-horizontal" name="loginForm" novalidate style="margin-top: 20px;">
+		<div class="form-group col-md-12" ng-class="{ 'has-error': form.isInvalid('user', 'required') }">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-user"></span>
+				</div>
+				<input name="user" class="form-control" ng-model="form.user" required autofocus>
+			</div>
+			<!-- <span class="help-block" ng-show="form.isInvalid('user', 'required')">
+				User name is required.
+			</span> -->
+		</div>
+		<div class="form-group col-md-12" ng-class="{ 'has-error': form.isInvalid('password', 'required') }">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-link"></span>
+				</div>
+				<input name="password" class="form-control" type="password" ng-model="form.password" required>
+			</div>
+			<!-- <span class="help-block" ng-show="form.isInvalid('password', 'required')">
+				Password is required.
+			</span> -->
+		</div>
+		<div class="form-group col-md-12" style="text-align:right; margin-bottom:0px">
+			<span class="text-danger">{{form.message}}</span>
+			<button class="btn btn-default" ng-click="form.loginClicked()" ng-disabled="form.requesting">Login</button>	
+		</div>
+	</form>
+</div>

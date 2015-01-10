@@ -1,14 +1,8 @@
 {
     "proxy": true,
     "proxyDic": {
-        "rest": {
-            "host": "localhost",
-            "port": 3000
-        },
-        "report": {
-            "host": "10.10.73.208",
-            "port": 9001
-        }
-    },
-    "auth": false
+        "/rest": "http://10.10.73.207:3000",
+        "/file": "http://10.10.73.207:3000",
+        "/Services": "http://10.10.73.208:9001"
+    }
 }

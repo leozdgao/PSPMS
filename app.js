@@ -3,36 +3,24 @@ var app = express();
 
 var path = require('path');
 
-//get configuration
-var config = require('./config.json');
-app.set('port', process.env.PORT || 3000);
-
 //set view engine
 var exphbs = require('express-handlebars');
 app.engine('hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-//requrie middlewares
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// use logger
+app.use(require('morgan')('dev'));
+// set static file server
 app.use(express.static(path.join(__dirname, 'public')));
 
-var routes = require('./routes/index');
-var userRoute = require('./routes/user');
-//var proxy = require('./routes/proxy');
+// proxy
+var config = require('./config.json');
+if(config.proxy) app.use(require('./routes/proxy'));
 
-app.use('/', routes);
-app.use('/user', userRoute);
-//app.use('/proxy', proxy);
+// routers
+app.use('/', function(req, res) { res.render('index', { title: 'PSPMS' }); });
+app.use('/user', require('./routes/user'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,8 +39,14 @@ app.use(function(err, req, res, next) {
     });
 });
 
-var debug = require('debug')('server');
+// var debug = require('debug')('server');
+var mongoose = require('mongoose');
 
-var server = app.listen(app.get('port'), function() {
-    debug('Express server listening on port ' + server.address().port);
+mongoose.connect('mongodb://10.10.73.207:27017, 10.10.73.208:27017/PSPMS_Dev?replicaSet=pspms', function() {
+
+    var server = app.listen(process.env.PORT || 3000, function() {
+        console.log('Express server listening on port ' + server.address().port);
+    });    
 });
+
+

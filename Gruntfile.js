@@ -1,3 +1,5 @@
+var files = require("./files");
+
 module.exports = function(grunt){
     //load all dep grunt-plugins
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -5,7 +7,7 @@ module.exports = function(grunt){
     grunt.initConfig({
         concat: {
             js: {
-                src: 'app/src/**/*.js',
+                src: [].concat(files.src),
                 dest: 'public/javascripts/app.js'
             },
             css: {
@@ -27,11 +29,7 @@ module.exports = function(grunt){
                 expand: true,
                 cwd: "app/public/",
                 src: "**",
-                dest: "public/",
-                filter: function(path){
-                    //exclude angular-mocks
-                    return path.indexOf('mock') <= -1;
-                }
+                dest: "public/"
             }
         },
         express: {
@@ -43,7 +41,8 @@ module.exports = function(grunt){
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js'
+                configFile: 'karma.conf.js',
+                singleRun: true
             }
         },
         watch: {
