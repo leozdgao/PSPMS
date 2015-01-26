@@ -1,0 +1,31 @@
+#ap-body {
+	width: 80%;
+	margin: 20px auto 0px;
+}
+
+.ap-container {
+	margin: 30px 0px 0px;
+}
+
+.ap-box {
+	float: left;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	background: #ccc;
+	color: #888;
+}
+.ap-box:hover {
+	cursor: pointer;
+	background: #eee;
+	color: #3399cc;
+}
+.ap-box i {
+	display: inline-block;
+	margin-top: 10px;
+	font-size: 100px;
+}
+.ap-box p {
+	font-size: 14px;
+	margin-top: 15px;
+}

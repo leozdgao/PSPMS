@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'pspms-icon';
-	src:url('/assets/fonts/pspms-icon.eot?z5pkf8');
-	src:url('/assets/fonts/pspms-icon.eot?#iefixz5pkf8') format('embedded-opentype'),
-		url('/assets/fonts/pspms-icon.woff?z5pkf8') format('woff'),
-		url('/assets/fonts/pspms-icon.ttf?z5pkf8') format('truetype'),
-		url('/assets/fonts/pspms-icon.svg?z5pkf8#pspms-icon') format('svg');
+	src:url('/assets/fonts/pspms-icon.eot?-tdxlkh');
+	src:url('/assets/fonts/pspms-icon.eot?#iefix-tdxlkh') format('embedded-opentype'),
+		url('/assets/fonts/pspms-icon.woff?-tdxlkh') format('woff'),
+		url('/assets/fonts/pspms-icon.ttf?-tdxlkh') format('truetype'),
+		url('/assets/fonts/pspms-icon.svg?-tdxlkh#pspms-icon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -37,6 +37,10 @@
 
 .icon-user:before {
 	content: "\e971";
+}
+
+.icon-resources:before {
+	content: "\e972";
 }
 
 .icon-adduser:before {

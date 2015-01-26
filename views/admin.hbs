@@ -1,7 +1,15 @@
 <div id="ap-body">
 	<!-- admin page body -->
 	{{#if isAdmin}}
-
+	<!-- <p class="ap-message">Hi! Admin. You can:</p> -->
+	<div class="ap-container clearfix">
+		{{#each func}}
+		<div class="ap-box">
+			<i class="icon {{icon}}"></i>
+			<p>{{info}}</p>
+		</div>	
+		{{/each}}
+	</div>
 	{{else}}
 	<!-- not authorized -->
 	<h2>401 Not Authorized</h2>
