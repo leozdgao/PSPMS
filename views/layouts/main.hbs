@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PSPMS</title>
+	<link rel="stylesheet" href="/assets/style.min.css">
+	<script src="/assets/script.min.js"></script>
+</head>
+<body>
+	<!-- navbar here -->
+	<div id="navbar" class="clearfix">
+		<div class="nav-brand">
+			<a href="/"><i class="icon icon-home"></i>PSPMS</a>
+		</div>
+		<div class="nav-set">
+			<div class="nav-searchbar">
+				<i class="icon icon-search"></i>
+				<input type="text" class="textbox nav-search">
+			</div>
+			<ul class="nav-menu">
+				<li><a href="#">Info</a></li>
+				<li><a href="#">Report</a></li>
+			</ul>
+			<div class="nav-user">
+				{{#if isAuth}}
+
+				{{else}}
+				<a href="#" class="btn nav-btn">Login</a>
+				{{/if}}
+			</div>	
+		</div>
+	</div>
+	<!-- body here -->
+	{{{body}}}
+	<!-- footer here -->
+	<div id="footer"></div>
+</body>
+</html>
