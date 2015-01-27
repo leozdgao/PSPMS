@@ -50,14 +50,3 @@ app.listen(port, function() {
 
 	console.log("Express server listening on port " + 3000);
 });
-
-
-// module.exports = app;
-// app.set('views', path.join(__dirname, 'views'));
-// var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
-// var favicon = require('serve-favicon');
-// app.use(favicon(__dirname + '/public/favicon.ico'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());

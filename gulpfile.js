@@ -2,12 +2,14 @@ var gulp = require('gulp');
 var files = require('./files');
 
 gulp.task('default', ['assets', 'watch']);
+gulp.task('dev', ['monitor', 'watch']);
 
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var minify = require('gulp-minify-css'); //css
 var uglify = require('gulp-uglify'); //js
 var livereload = require('gulp-livereload');
+var nodemon = require('gulp-nodemon');
 
 gulp.task('assets', function() {
 
@@ -32,6 +34,10 @@ gulp.task('assets', function() {
 
 gulp.task('watch', function() {
 
+	// refresh if file cahnges
+	gulp.src(files.watch)
+		.pipe(livereload());
+
 	livereload.listen();
 	// watch assets
 	var watcher = gulp.watch(Array.prototype.concat.call(files.js, files.css), ['assets']);
@@ -40,3 +46,9 @@ gulp.task('watch', function() {
 	});
 });
 
+gulp.task('monitor', function() {
+	nodemon({ script: 'app.js', ext: 'js', ignore: files.monignore })
+		.on('restart', function() {
+			console.log('restarted!');
+		});
+});
