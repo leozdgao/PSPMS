@@ -6,7 +6,7 @@ var path = require('path');
 // use logger
 app.use(require('morgan')('dev'));
 // set static file server
-app.use(require('serve-static')(path.join(__dirname, 'public')));
+app.use(require('serve-static')(path.join(__dirname, 'assets')));
 // app.use(express.static());
 
 // proxy

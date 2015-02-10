@@ -1,5 +1,5 @@
 module.exports = {
-	src: [
+	js: [
 		"app/src/app.js",
 		"app/src/admin/admin.js",
 		"app/src/auth/auth.js",
@@ -17,7 +17,14 @@ module.exports = {
 		"app/test/**/*.js"
 	],
 	vendor: [
-		"app/public/javascripts/vendors/angular.min.js",
-		"app/public/javascripts/vendors/*.js"
-	]
+		"assets/lib/angular.min.js",
+		"assets/lib/*.js"
+	],
+	css: [],
+	templatesrc: "app/src/**/*.html",
+	templatedest: "assets/template/",
+	destJs: 'script.js',
+	destCss: 'style.css',
+	destLib: 'assets/release',
+	release: 'assets/release'
 }

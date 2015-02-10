@@ -36,3 +36,7 @@ public
 
 # sass
 .sass-cache
+
+# assets
+assets/release
+assets/template

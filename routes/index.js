@@ -6,7 +6,7 @@ router.use('/', function(req, res) {
 
 	console.log(req.url);
 
-	require("fs").createReadStream("views/index.html").pipe(res);
+	require("fs").createReadStream("assets/index.html").pipe(res);
 });
 
 module.exports = router;
