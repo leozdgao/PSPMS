@@ -25,22 +25,26 @@ angular.module("app.auth", [])
 ])
 
 .factory('UserService', [function(){
-	var user;
+	var user, session;
 
 	return {
 		getUser: function() {
 			return user;
 		},
 		getToken: function() {
-			var u = user || {};
-			return u.token;
+			session = session || {};
+			return session.token;
 		},
 		getRole: function() {
-			var u = user || {};
-			return u.role;
+			session = session || {};
+			return session.role;
 		},
-		setUser: function(newUser) {
-			user = newUser;
+		setSession: function(sess) {
+			session = sess || {};
+			user = session.resource;
+		},
+		getSession: function() {console.log(session);
+			return session;
 		}
 	}
 }])
@@ -75,7 +79,7 @@ angular.module("app.auth", [])
 					$http.post(url, {
 						uid: uid, pwd: pwd
 					}).success(function(data) {
-						UserService.setUser(data.user);
+						UserService.setSession(data.session);
 						defer.resolve(data);
 					}).error(function(err) {
 						defer.reject(err);
@@ -88,12 +92,13 @@ angular.module("app.auth", [])
 					var defer = $q.defer();
 					var url = self.authUrl.logout;
 					var user = UserService.getUser();
+					var session = UserService.getSession();
 
-					if(user && user.token) {
+					if(user) {
 						$http.get(url, {
 							headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }
 						}).success(function() {
-							UserService.setUser(void(0));
+							UserService.setSession(void(0));
 							defer.resolve();
 						}).error(function(err) {
 							defer.reject(err);
@@ -105,18 +110,16 @@ angular.module("app.auth", [])
 
 					return defer.promise;
 				},
-				isAuthenticated: function(role) {
-					var user = UserService.getUser();
+				isAuthenticated: function(r) {
+					var role = UserService.getRole();console.log(role);
 
-					if(typeof user == "undefined") {
-						return false;
-					}
+					if(angular.isUndefined(role)) return false;
 
-					if(typeof role == "undefined") {
+					if(typeof r == "undefined") {
 						return true;
 					} 
-					else {
-						return user.role >= role;
+					else {console.log(role >= r);
+						return role >= r;
 					}
 				},
 				relog: function(token) {
@@ -127,11 +130,10 @@ angular.module("app.auth", [])
 					$http.get(url, {
 						params: { token: token },
 						headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }
-					}).success(function(user) {
+					}).success(function(session) {
 
-						UserService.setUser(user);
-						
-						defer.resolve(user);
+						UserService.setSession(session);						
+						defer.resolve(session.resource);
 					}).error(function() {
 
 						defer.reject();

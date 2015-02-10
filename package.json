@@ -2,7 +2,7 @@
   "name": "PSPMS_Web",
   "version": "3.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },

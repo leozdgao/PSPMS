@@ -6,7 +6,7 @@ angular.module("app.directives")
 	return {
 		show: function(onLogin) {
 			modalInstance = $modal.open({
-				templateUrl: "/templates/directives/login/template.html",
+				templateUrl: "/template/directives/login/template.html",
 				controller: "LoginPanelController",
 				resolve: {
 					onLogin: function() {
