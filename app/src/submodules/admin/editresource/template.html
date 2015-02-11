@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <button class="close" ng-click="form.close()"><span>&times;</span></button>
+    <h4 class="modal-title">{{form.title}}</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" name="resourceForm" novalidate>
+		<fieldset ng-disabled="form.requesting">
+			<div class="form-group">
+				<label for="name" class="control-label col-sm-2">Name</label>
+				<div class="col-sm-10">
+					<input class="form-control" name="name" ng-model="form.obj.name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="control-label col-sm-2">Email</label>
+				<div class="col-sm-10">
+					<input class="form-control" name="email" ng-model="form.obj.email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="joinDate" class="control-label col-sm-2">JoinDate</label>
+				<div class="col-sm-10">
+					<input class="form-control" name="joinDate" ng-model="form.obj.joinDate">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10 checkbox">
+				    <label>
+				      <input type="checkbox" name="isIntern" ng-model="form.obj.isIntern"> IsIntern
+				    </label>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" ng-click="form.close()">Close</button>
+	<button class="btn btn-primary" ng-click="form.submit()">{{form.submitText}}</button>
+</div>

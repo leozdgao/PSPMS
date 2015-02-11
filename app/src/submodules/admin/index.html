@@ -1,0 +1,25 @@
+<div ng-controller="ManagerController">
+	<button class="btn btn-default" style="margin-bottom:20px;" ng-click="action.addResource()">Add resource</button>
+	<div class="table-responsive">
+		<table class="table table-bordered" ng-cloak>
+			<tr>
+				<th class="col-md-2"><i class="glyphicon glyphicon-user"></i> Name</th>
+				<th class="col-md-5"><i class="glyphicon glyphicon-envelope"></i> Email</th>
+				<th class="col-md-2"><i class="glyphicon glyphicon-calendar"></i> JoinDate</th>
+				<th class="col-md-1"><i class="glyphicon glyphicon-time"></i> IsIntern</th>
+				<th class="col-md-2"><i class="glyphicon glyphicon-wrench"></i> Action</th>
+			</tr>
+			<tr ng-repeat="resource in resourceList">
+				<td>{{resource.name}}</td>
+				<td>{{resource.email}}</td>
+				<td>{{resource.joinDate | date:'yyyy/MM/dd'}}</td>
+				<td><i class="glyphicon glyphicon-ok" ng-show="!resource.isIntern"></i></td>
+				<td>
+					<button class="btn btn-xs btn-primary" ng-click="action.editResource(resource._id)">Edit</button>
+					<button class="btn btn-xs btn-success" ng-click="action.editAccount(resource._id)">Account</button>
+					<button class="btn btn-xs btn-danger" ng-click="action.removeResource(resource.resourceId)">Remove</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

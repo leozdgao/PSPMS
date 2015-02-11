@@ -17,6 +17,6 @@ if(config.proxy) app.use(require('./routes/proxy'));
 app.use('/', require('./routes/index'));
 
 
-var server = app.listen(process.env.PORT || 1393, function() {
+var server = app.listen(process.env.PORT || config.port || 3000, function() {
     console.log('Express server listening on port ' + server.address().port);
 });

@@ -24,6 +24,7 @@ angular.module("app.directives")
 
 .controller('LoginPanelController', ['$scope', '$modalInstance', 'onLogin',
 	function($scope, $modalInstance, onLogin){
+		
 		$scope.form = {
 			submitted: false,
 			requesting: false,

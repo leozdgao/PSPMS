@@ -1,5 +1,5 @@
 //var app = angular.module("pspms", ['ui.router', 'ui.bootstrap', 'app.info', 'app.report']);
-var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.directives', 'app.auth']);
+var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.directives', 'app.auth', 'app.admin']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "MessageBox",
 	function($rootScope, $state, $stateParams, $location, $cookies, AuthService, UserService, MessageBox){
@@ -18,32 +18,12 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthS
 	    		var role = UserService.getRole();
 	    		return angular.isDefined(role) && role <= -1;
 	    	}
-	    }
+	    };
 
-	    // try re-login if token is not expire
-	    if(!AuthService.isAuthenticated()) {
-
-	    	// var oldToken = $cookieStore.get("token");
-	    	var oldToken = $cookies.token;
+	    $rootScope.$on("$stateChangeError", function(e, to, toParams, from, fromParams, error) {
 	    	
-	    	if(angular.isDefined(oldToken)) {
-
-	    		AuthService.relog(oldToken).then(function() {
-console.log('after relog');
-	    			// $scope.user = UserService.getUser();
-
-	    			// if($scope.auth.isAdmin()) {
-	    				// $state.go("admin");
-	    			// }
-	    		})
-	    		.catch(function(err) {
-	    			
-	    			//session expired
-	    			if(err && err.code == 3)
-	    				delete $cookies.token;
-	    		});
-	    	}
-	    }
+	    	console.log('error');
+	    });
 
 	    $rootScope.$on("$stateChangeSuccess", function(e, to, toParams, from, fromParams) {
 	    	if(to.name == "admin") {
@@ -54,7 +34,7 @@ console.log('after relog');
 	    		}
 	    	}
 	    	else {
-	    		var ac = to.access_control || 0; console.log(ac);console.log(!AuthService.isAuthenticated(ac));
+	    		var ac = to.access_control || 0;
 
 	    		if(ac && !AuthService.isAuthenticated(ac)) {
 	    			MessageBox
@@ -70,6 +50,25 @@ console.log('after relog');
 
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', 'AuthServiceProvider',
 	function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, AuthServiceProvider) {
+
+		AuthServiceProvider.authUrl.login = "/user/login";
+		AuthServiceProvider.authUrl.logout = "/user/logout";
+		AuthServiceProvider.authUrl.relog = "/user/relog";
+
+		var relogService = ['$q', '$cookies', 'AuthService', 'UserService', function($q, $cookies, AuthService, UserService) {
+
+			var defer = $q.defer();
+			var oldToken = $cookies.token;
+			if(!AuthService.isAuthenticated() && angular.isDefined(oldToken)) {
+
+				AuthService.relog(oldToken).finally(function(){ defer.resolve(); });
+			}
+			else {
+				defer.resolve();
+			}
+			return defer.promise;
+		}];
+
 		$stateProvider
 			.state("index", {
 				url: "/",
@@ -78,6 +77,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
 						templateUrl: "/template/index.html"
 					}
 				},
+				resolve: relogService,
 				access_control: 0
 			})
 			.state("report", {
@@ -87,6 +87,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
 						templateUrl: "/template/index.html"
 					}				
 		        },
+		        resolve: relogService,
 		        access_control: 1
 		    })
 		    .state("admin", {
@@ -96,19 +97,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
 		    			templateUrl: "/template/index.html"
 		    		},
 		    		"general@admin": {
-						templateUrl: "/template/admin/index.html"
+						templateUrl: "/template/submodules/admin/index.html"
 					}
 		    	},
+		    	resolve: relogService,
 		    	access_control: -1
 		    });
 
 		$urlRouterProvider.otherwise("/");
 
 		$httpProvider.interceptors.push("AuthTokenInterceptor");
-
-		AuthServiceProvider.authUrl.login = "/user/login";
-		AuthServiceProvider.authUrl.logout = "/user/logout";
-		AuthServiceProvider.authUrl.relog = "/user/relog";
 
 		$locationProvider.html5Mode(true);
 }]);
@@ -126,12 +124,7 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
 				.then(function(user) {
 
 					// update navbar
-					// $state.reload();
 					$scope.user = UserService.getUser();
-
-					if($scope.auth.isAdmin()) {
-						// $state.go("admin");
-					}
 				});
 		}
 
@@ -139,7 +132,7 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
 
 			AuthService.logout()
 				.then(function() {
-					// $cookieStore.remove("token");
+
 					delete $cookies.token;
 
 					$scope.user = UserService.getUser();
@@ -151,31 +144,6 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
 				});
 		}
 
-		$scope.user = UserService.getUser();console.log('get user');
-
-		// // try re-login if token is not expire
-		// if(!$scope.auth.isAuthenticated()) {
-
-		// 	// var oldToken = $cookieStore.get("token");
-		// 	var oldToken = $cookies.token;
-			
-		// 	if(angular.isDefined(oldToken)) {
-
-		// 		AuthService.relog(oldToken).then(function() {
-
-		// 			$scope.user = UserService.getUser();
-
-		// 			if($scope.auth.isAdmin()) {
-		// 				// $state.go("admin");
-		// 			}
-		// 		})
-		// 		.catch(function(err) {
-					
-		// 			//session expired
-		// 			if(err && err.code == 3)
-		// 				delete $cookies.token;
-		// 		});
-		// 	}
-		// }
+		$scope.user = UserService.getUser();
 	}
 ]);

@@ -1,8 +1,9 @@
 {
+	"port": 1393,
     "proxy": true,
     "proxyDic": {
     	"/user": "http://localhost:1339",
-        "/rest": "http://10.10.73.207:3000",
+        "/rest": "http://localhost:1339",
         "/file": "http://10.10.73.207:3000",
         "/Services": "http://10.10.73.208:9001"
     }

@@ -43,7 +43,7 @@ angular.module("app.auth", [])
 			session = sess || {};
 			user = session.resource;
 		},
-		getSession: function() {console.log(session);
+		getSession: function() {
 			return session;
 		}
 	}
@@ -111,14 +111,14 @@ angular.module("app.auth", [])
 					return defer.promise;
 				},
 				isAuthenticated: function(r) {
-					var role = UserService.getRole();console.log(role);
+					var role = UserService.getRole();
 
 					if(angular.isUndefined(role)) return false;
 
 					if(typeof r == "undefined") {
 						return true;
 					} 
-					else {console.log(role >= r);
+					else {
 						return role >= r;
 					}
 				},
