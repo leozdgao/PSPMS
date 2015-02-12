@@ -1,7 +1,7 @@
-angular.module('app.admin', ['app.datacenter', 'app.directives', 'ui.bootstrap'])
+angular.module('app.admin', ['app.datacenter', 'app.directives'])
 
-.controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel', 'MessageBox',
-	function ($scope, UserService, Resource, EditPanel, MessageBox) {
+.controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel', 'AccountPanel', 'MessageBox',
+	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox) {
 
 		$scope.user = UserService.getUser();
 		$scope.resourceList = [];
@@ -21,29 +21,39 @@ angular.module('app.admin', ['app.datacenter', 'app.directives', 'ui.bootstrap']
 
 			addResource: function() {
 
-				EditPanel.show();
+				EditPanel.show()
+					.then(function() {
+
+						return refreshGrid();
+					});
 			},
 			editResource: function(id) {
 
-				var list = $scope.resourceList, current;
-
-				for (var i = 0, l = list.length; i < l; i++) {
-
-					var resource = list[i];
-					if(resource._id == id) {
-
-						current = resource; break;
-					} 
-				}
+				var current = getCurrentResource(id);
 
 				if(current) {
 
-					EditPanel.show(current);
+					EditPanel.show(current)
+						.then(function() {
+
+							return refreshGrid();
+						});
 				}
 				else MessageBox.show('This resource is not available.');
 			},
 			editAccount: function(id) {
 
+				var current = getCurrentResource(id);
+
+				if(current) {
+
+					AccountPanel.show(current)
+						.then(function() {
+
+							return refreshGrid();
+						});
+				}
+				else MessageBox.show('This resource is not available.');
 			},
 			removeResource: function(id) {
 
@@ -54,22 +64,39 @@ angular.module('app.admin', ['app.datacenter', 'app.directives', 'ui.bootstrap']
 						Resource.remove({id: id}).$promise
 							.then(function() {
 
-								console.log(arguments);
-								return Resource.get({'conditions.resourceId.$gt':'0'}).$promise;
-							})
-							.then(function(results) {console.log(results);
-
-								$scope.resourceList = results;
+								return refreshGrid();
 							})
 							.catch(function(err) {
 
-								console.log(err);
 								MessageBox.show('Error occurred while removing this resource.');
 							});
-
-						//refresh list
 					});
 			}
 		};
+
+		function refreshGrid() {
+
+			return Resource.get({'conditions.resourceId.$gt':'0'}).$promise
+					.then(function(results) {
+
+						$scope.resourceList = results;
+					});
+		}
+
+		function getCurrentResource(id) {
+
+			var list = $scope.resourceList, current;
+
+			for (var i = 0, l = list.length; i < l; i++) {
+
+				var resource = list[i];
+				if(resource._id == id) {
+
+					current = resource; break;
+				} 
+			}
+
+			return current;
+		}
 	}
-])
+]);

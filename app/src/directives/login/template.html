@@ -1,6 +1,8 @@
+<div class="modal-header">
+    <button class="close" ng-click="form.close()"><span>&times;</span></button>
+    <h4 class="modal-title">Login</h4>
+</div>
 <div class="modal-body container-fluid">
-	<h3 style="margin:0px;display:inline">Login</h3>
-	<button class="close" ng-click="form.close()"><span>&times;</span></button>
 	<form  name="loginForm" novalidate style="margin-top: 20px;">
 		<fieldset ng-disabled="form.requesting">
 			<div class="row">
@@ -29,12 +31,15 @@
 					</span> -->
 				</div>	
 			</div>
-			<div class="row">
-				<div class="form-group col-md-12" style="text-align:right; margin-bottom:0px">
-					<span class="text-danger">{{form.message}}</span>
-					<button class="btn btn-default" ng-click="form.loginClicked()" >Login</button>	
-				</div>	
-			</div>
+			
 		</fieldset>
 	</form>
+</div>
+<div class="modal-footer">
+	<div class="row">
+		<div class="form-group col-md-12" style="text-align:right; margin-bottom:0px">
+			<span class="text-danger">{{form.message}}</span>
+			<button class="btn btn-default" ng-click="form.loginClicked()" ng-disabled="form.requesting">Login</button>	
+		</div>	
+	</div>
 </div>

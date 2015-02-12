@@ -12,8 +12,8 @@
 			<tr ng-repeat="resource in resourceList">
 				<td>{{resource.name}}</td>
 				<td>{{resource.email}}</td>
-				<td>{{resource.joinDate | date:'yyyy/MM/dd'}}</td>
-				<td><i class="glyphicon glyphicon-ok" ng-show="!resource.isIntern"></i></td>
+				<td>{{resource.joinDate | date:'yyyy-MM-dd'}}</td>
+				<td><i class="glyphicon glyphicon-ok" ng-show="resource.isIntern"></i></td>
 				<td>
 					<button class="btn btn-xs btn-primary" ng-click="action.editResource(resource._id)">Edit</button>
 					<button class="btn btn-xs btn-success" ng-click="action.editAccount(resource._id)">Account</button>

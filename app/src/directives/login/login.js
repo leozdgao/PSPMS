@@ -51,6 +51,7 @@ angular.module("app.directives")
 							$scope.form.message = err ? (err.msg || "Login failed."): "Login failed.";
 						})
 						.finally(function() {
+
 							$scope.form.submitted = false;
 							$scope.form.requesting = false;
 						});
@@ -68,11 +69,13 @@ angular.module("app.directives")
 		}
 
 		$scope.$watch("form.user", function(newVal, oldVal) {
+
 			if(newVal !== oldVal) {
 				validateMessage();
 			}
 		});
 		$scope.$watch("form.password", function(newVal, oldVal) {
+			
 			if(newVal !== oldVal) {
 				validateMessage();
 			}
