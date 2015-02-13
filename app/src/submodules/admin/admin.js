@@ -1,7 +1,8 @@
 angular.module('app.admin', ['app.datacenter', 'app.directives'])
 
-.controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel', 'AccountPanel', 'MessageBox',
-	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox) {
+.controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel',
+	'AccountPanel', 'MessageBox', 'ResourceList',
+	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox, ResourceList) {
 
 		$scope.user = UserService.getUser();
 		$scope.resourceList = [];
@@ -10,6 +11,7 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 		Resource.get({ 'conditions.resourceId.$gt':'0' }).$promise
 			.then(function(results) {
 				
+				pushList(results);
 				$scope.resourceList = results;
 			})
 			.catch(function(err) {
@@ -27,7 +29,7 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 						return refreshGrid();
 					});
 			},
-			editResource: function(id) {
+			editResource: function(id) {console.log(id);
 
 				var current = getCurrentResource(id);
 
@@ -79,24 +81,23 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 			return Resource.get({'conditions.resourceId.$gt':'0'}).$promise
 					.then(function(results) {
 
+						pushList(results);
 						$scope.resourceList = results;
 					});
 		}
 
 		function getCurrentResource(id) {
 
-			var list = $scope.resourceList, current;
+			return ResourceList.get(id);
+		}
+
+		function pushList(list) {
 
 			for (var i = 0, l = list.length; i < l; i++) {
-
+				
 				var resource = list[i];
-				if(resource._id == id) {
-
-					current = resource; break;
-				} 
+				ResourceList.put(resource._id, resource);
 			}
-
-			return current;
 		}
 	}
 ]);

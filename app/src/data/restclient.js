@@ -24,7 +24,8 @@ angular.module("app.datacenter", ["ngResource"])
 		insert: { method: "POST" },
 		update: { method: "PUT" },
 		remove: { method: "DELETE" },
-		changeAccount: { method: "POST", url: "/user/signup" }
+		createAccount: { method: "POST", url: "/user/signup" },
+		resetAccount: { method: "POST", url: "/user/resetaccount" }
 	});
 }]);
 

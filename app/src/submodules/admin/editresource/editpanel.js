@@ -34,7 +34,7 @@ angular.module('app.admin')
 			dateoption: dateoption,
 			title: CurrentResource ? 'Edit resource': 'Add resource',
 			submitText: CurrentResource ? 'Save changes': 'Submit',
-			emailPattern: "^[-_A-Za-z0-9]+@([A-za-z0-9]+\.)+[A-za-z0-9]{2,3}$",
+			emailPattern: "^[-_A-Za-z0-9.]+@([A-za-z0-9]+\.)+[A-za-z0-9]{2,3}$",
 			requesting: false,
 			submitted: false,
 			submit: function() {

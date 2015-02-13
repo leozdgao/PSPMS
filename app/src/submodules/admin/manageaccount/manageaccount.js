@@ -22,28 +22,64 @@ angular.module('app.admin')
 	};
 }])
 
-.controller('AccountPanelController', ['$scope', '$modalInstance', 'CurrentResource',  'Resource',
-	function($scope, $modalInstance, CurrentResource, Resource) {
+.controller('AccountPanelController', ['$scope', '$modalInstance', 'CurrentResource',  'Resource', 
+	'MessageBox', 'ResourceList',
+	function($scope, $modalInstance, CurrentResource, Resource, MessageBox, ResourceList) {
 
 		var account = CurrentResource.account || {};
+		var uid = account.uid;
+		var lastLoginDate = account.lastLoginDate;
 
 		$scope.form = {
-			obj: { uid: account.uid },
+			obj: { uid: uid, lastLoginDate: lastLoginDate },
+			hasAccount: angular.isDefined(uid),
+			requesting: false,
+			submitted: false,
+			reset: function() { 
+
+				// reset account
+				MessageBox.show('Reset this account?', { style: 'confirm' })
+					.then(function() {
+
+						return Resource.resetAccount(null, { resourceId: CurrentResource._id }).$promsie
+					})
+					.then(function() {
+
+						// update resource list
+						var resource = ResourceList.get(CurrentResource._id);
+						resource.account = null;
+						ResourceList.put(CurrentResource._id, resource);
+
+						$scope.form.obj = {};
+						$scope.form.hasAccount = false;
+					})
+					.catch(function() {
+
+						MessageBox.show('Error occurred while reset this account.');
+					});
+			},
 			submit: function() {
 
-				// Resource.changeAccount(null, {
-				// 	uid: $scope.form.obj.uid,
-				// 	pwd: $scope.form.obj.pwd,
-				// 	resourceId: CurrentResource._id
-				// }).$promise
-				// .then(function() {
+				// signup
+				$scope.form.submitted = true;
 
-				// 	$modalInstance.close();
-				// })
-				// .catch(function() {
+				if($scope.accountForm.$valid) {
 
-				// 	$modalInstance.dismiss();
-				// });
+					$scope.form.requesting = true;
+
+					Resource.createAccount(null, { uid: $scope.form.obj.uid,
+						pwd: $scope.form.obj.pwd, resourceId: CurrentResource._id })
+						.$promise
+						.then(function() {
+
+							$modalInstance.close();
+						})
+						.finally(function() {
+
+							$scope.form.submitted = false;
+							$scope.form.requesting = false;
+						});
+				}
 			},
 			close: function() {
 

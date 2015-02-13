@@ -5,28 +5,43 @@
 <div class="modal-body">
 	<form class="form-horizontal" name="accountForm" novalidate>
 		<fieldset ng-disabled="form.requesting">
-			<div class="form-group">
+			<div class="form-group" ng-class="{'has-error': form.isInvalid('uid', 'required')}">
 				<label for="uid" class="control-label col-sm-2">UserID</label>
+				<div class="col-sm-10" ng-if="!form.hasAccount">
+					<input class="form-control" name="uid" ng-model="form.obj.uid" ng-required="true">
+					
+				</div>
+				<div class="col-sm-10" ng-if="form.hasAccount">
+					<p class="form-control-static" name="uid">{{form.obj.uid}}</p>
+				</div>
+				<span class="help-block col-sm-offset-2 col-sm-10" ng-show="form.isInvalid('uid', 'required')">Acount user ID is required</span>
+			</div>
+			<div class="form-group" ng-if="form.hasAccount">
+				<label for="lastlogindate" class="control-label col-sm-2">LastLogin</label>
 				<div class="col-sm-10">
-					<input class="form-control" name="uid" ng-model="form.obj.uid">
+					<p class="form-control-static" name="lastlogindate">{{form.obj.lastLoginDate | date:'yyyy-MM-dd hh:mm:ss'}}</p>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="!form.hasAccount" ng-class="{'has-error': form.isInvalid('pwd', 'required')}">
 				<label for="pwd" class="control-label col-sm-2">Password</label>
 				<div class="col-sm-10">
-					<input class="form-control" type="password" name="pwd" ng-model="form.obj.pwd">
+					<input class="form-control" type="password" name="pwd" ng-model="form.obj.pwd" ng-required="true">
 				</div>
+				<span class="help-block col-sm-offset-2 col-sm-10" ng-show="form.isInvalid('pwd', 'required')">Acount password is required</span>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="!form.hasAccount" ng-class="{'has-error': form.isInvalid('pwd2', 'required') || form.isInvalid('pwd2', 'equal')}">
 				<label for="pwd2" class="control-label col-sm-2">Password</label>
 				<div class="col-sm-10">
-					<input class="form-control" type="password" name="pwd2" ng-model="form.obj.pwd2">
+					<input class="form-control" ng-equal="form.obj.pwd" type="password" name="pwd2" ng-model="form.obj.pwd2" ng-required="true">
 				</div>
+				<span class="help-block col-sm-offset-2 col-sm-10" ng-show="form.isInvalid('pwd2', 'required')">Enter password again</span>
+				<span class="help-block col-sm-offset-2 col-sm-10" ng-show="form.isInvalid('pwd2', 'equal')">Password is not constant</span>
 			</div>
 		</fieldset>
 	</form>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-default" ng-click="form.close()">Close</button>
-	<button class="btn btn-primary" ng-click="form.submit()" ng-disabled="form.requesting">Submit</button>
+	<button class="btn btn-primary" ng-click="form.reset()" ng-if="form.hasAccount" ng-disabled="form.requesting">Reset</button>
+	<button class="btn btn-primary" ng-click="form.submit()" ng-if="!form.hasAccount" ng-disabled="form.requesting">Submit</button>
 </div>
