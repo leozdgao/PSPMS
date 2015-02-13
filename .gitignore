@@ -39,7 +39,6 @@ public
 
 # assets
 assets/release
-assets/template
-!assets/template/modal
-!assets/template/datepicker
+assets/template/directives
+assets/template/submodules
 

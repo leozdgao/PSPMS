@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default"  ng-Controller="NavBarController">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="index">
+        	<span class="glyphicon glyphicon-home"></span>
+        	 PSPMS
+        </a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li ui-sref-active="active">
+                <a ui-sref="index">Info</a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="report">Report</a>
+            </li>
+            <li ui-sref-active="active" ng-if="auth.isAdmin()">
+                <a ui-sref="admin">Manage</a>
+            </li>
+        </ul>
+
+        <!-- not auth -->
+        <button class="btn btn-default navbar-btn navbar-right" ng-click="showLoginPanel()"
+                ng-hide="auth.isAuthenticated()">Login</button>
+
+        <!-- authed -->
+        <ul class="nav navbar-nav navbar-right" ng-show="auth.isAuthenticated()">
+            <li>
+                <p class="navbar-text"><span class="glyphicon glyphicon-user"></span> {{user.name}}</p>
+            </li>
+            <li><a class="navbar-link" style="cursor:pointer" ng-click="logout()">Log out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div ui-view="general"></div>
+    <!-- <div login></div> -->
