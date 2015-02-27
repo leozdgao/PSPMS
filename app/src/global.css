@@ -1,0 +1,13 @@
+.alert-list {
+	
+	z-index: 9999;
+	position: absolute;
+	top: 60px;
+	right: 15px;
+	width: 250px;
+}
+
+.alert-list .alert {
+
+	margin-bottom: 10px;
+}

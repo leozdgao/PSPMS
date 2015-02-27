@@ -23,8 +23,8 @@ angular.module('app.admin')
 }])
 
 .controller('EditPanelController', ['$scope', '$filter', '$modalInstance', 'CurrentResource', 'Resource',
-	'MessageBox', 'DatepickerOption',
-	function($scope, $filter, $modalInstance, CurrentResource, Resource, MessageBox, DatepickerOption) {
+	'MessageBox', 'DatepickerOption', 'Alert',
+	function($scope, $filter, $modalInstance, CurrentResource, Resource, MessageBox, DatepickerOption, Alert) {
 
 		var dateoption = new DatepickerOption();
 
@@ -58,22 +58,20 @@ angular.module('app.admin')
 
 					action.then(function() {
 
-								$modalInstance.close();
-							})
-							.catch(function(err) {
+							$modalInstance.close();
+						})
+						.catch(function(err) {
 
-								MessageBox.show('Error occurred while '
-												 + (CurrentResource ? 'editting': 'adding')
-												 + ' resource.')
-									.then(function() {
-										$modalInstance.dismiss();		
-									});
-							})
-							.finally(function() {
+							Alert.add('Error occurred while '
+									+ (CurrentResource ? 'editting': 'adding')
+									+ ' resource.', 'danger');
+							$modalInstance.dismiss();	
+						})
+						.finally(function() {
 
-								$scope.form.submitted = false;
-								$scope.form.requesting = false;
-							});
+							$scope.form.submitted = false;
+							$scope.form.requesting = false;
+						});
 				}
 			},
 			close: function() {

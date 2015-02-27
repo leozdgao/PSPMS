@@ -33,4 +33,10 @@
 </nav>
 
 <div ui-view="general"></div>
-    <!-- <div login></div> -->
+<!-- <div login></div> -->
+
+<div class="alert-list">
+    <alert ng-repeat="alert in alertModule.alerts" type="{{alert.type}}" close="alertModule.onClose(alert.key)">
+        {{alert.msg}}
+    </alert>
+</div>

@@ -21,7 +21,9 @@ module.exports = {
 		"assets/lib/angular.min.js",
 		"assets/lib/*.js"
 	],
-	css: [],
+	css: [
+		"app/src/global.css"
+	],
 	monignore: [
 		'app/**/*.js'
 	],

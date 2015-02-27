@@ -1,8 +1,8 @@
 angular.module('app.admin', ['app.datacenter', 'app.directives'])
 
 .controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel',
-	'AccountPanel', 'MessageBox', 'ResourceList',
-	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox, ResourceList) {
+	'AccountPanel', 'MessageBox', 'ResourceList', 'Alert',
+	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox, ResourceList, Alert) {
 
 		$scope.user = UserService.getUser();
 		$scope.resourceList = [];
@@ -16,7 +16,6 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 			})
 			.catch(function(err) {
 
-
 			});
 
 		$scope.action = {
@@ -26,10 +25,11 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 				EditPanel.show()
 					.then(function() {
 
+						Alert.add('New resource added.', 'success');
 						return refreshGrid();
 					});
 			},
-			editResource: function(id) {console.log(id);
+			editResource: function(id) {
 
 				var current = getCurrentResource(id);
 
@@ -38,10 +38,11 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 					EditPanel.show(current)
 						.then(function() {
 
+							Alert.add('Resource`s info saved.', 'success');
 							return refreshGrid();
 						});
 				}
-				else MessageBox.show('This resource is not available.');
+				else Alert.add('This resource is not available.', 'danger');
 			},
 			editAccount: function(id) {
 
@@ -52,10 +53,11 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 					AccountPanel.show(current)
 						.then(function() {
 
+							Alert.add('Resource`s account saved.', 'success');
 							return refreshGrid();
 						});
 				}
-				else MessageBox.show('This resource is not available.');
+				else Alert.add('This resource is not available.', 'danger');
 			},
 			removeResource: function(id) {
 
@@ -66,11 +68,12 @@ angular.module('app.admin', ['app.datacenter', 'app.directives'])
 						Resource.remove({id: id}).$promise
 							.then(function() {
 
+								Alert.add('Resource removed.', 'success');
 								return refreshGrid();
 							})
 							.catch(function(err) {
 
-								MessageBox.show('Error occurred while removing this resource.');
+								Alert.add('Error occurred while removing this resource.', 'danger');
 							});
 					});
 			}

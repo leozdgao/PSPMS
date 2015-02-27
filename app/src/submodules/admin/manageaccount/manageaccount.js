@@ -23,8 +23,8 @@ angular.module('app.admin')
 }])
 
 .controller('AccountPanelController', ['$scope', '$modalInstance', 'CurrentResource',  'Resource', 
-	'MessageBox', 'ResourceList',
-	function($scope, $modalInstance, CurrentResource, Resource, MessageBox, ResourceList) {
+	'MessageBox', 'ResourceList', 'Alert',
+	function($scope, $modalInstance, CurrentResource, Resource, MessageBox, ResourceList, Alert) {
 
 		var account = CurrentResource.account || {};
 		var uid = account.uid;
@@ -55,7 +55,7 @@ angular.module('app.admin')
 					})
 					.catch(function() {
 
-						MessageBox.show('Error occurred while reset this account.');
+						Alert.add('Error occurred while reset this account.', 'danger');
 					});
 			},
 			submit: function() {
