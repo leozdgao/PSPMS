@@ -1,5 +1,62 @@
+/*reset navbar margin*/
+.navbar {
+	margin: 0;
+}
+
+.sidebar {
+	position: fixed;
+	top: 52px;
+	left: 0;
+	bottom: 0;
+	padding: 0;
+	background: #eee;
+	width: 270px;
+}
+
+.content {
+	/*padding: 0;*/
+	margin-left: 270px;
+}
+
+.admin-panel {
+	padding: 20px;	
+}
+
+.company-list {
+	position: fixed;
+	top: 52px;
+	left: 270px;
+	bottom: 0;
+	overflow-y: scroll;
+	padding: 0;
+	width: 270px;
+}
+.company-list .searchbox {
+	position: fixed;
+	top: 52px;
+	left: 270px;
+	width: 253px;
+	height: 34px;
+	z-index: 10;
+}
+.company-list i {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+.company-list input {
+	padding-left: 30px;
+}
+.company-list .list-group {
+	padding-top: 34px;
+}
+
+.company-panel {
+	margin-left: 300px;
+	padding-top: 20px;
+}
+
 .alert-list {
-	
 	z-index: 9999;
 	position: absolute;
 	top: 60px;
@@ -8,6 +65,5 @@
 }
 
 .alert-list .alert {
-
 	margin-bottom: 10px;
 }

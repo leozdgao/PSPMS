@@ -1,0 +1,15 @@
+<div class="row" ng-controller="InfoController">
+	<div class="company-list col-md-2">
+		<div class="searchbox">
+			<input class="form-control" ng-model="filter.text">
+			<i class="glyphicon glyphicon-search"></i>
+		</div>
+		<div class="list-group">
+			<a class="list-group-item" ng-repeat="company in sortedCompanies">{{company.name}}</a>
+		</div>	
+	</div>
+	<div class="company-panel">
+		Content
+	</div>
+</div>
+

@@ -1,4 +1,4 @@
-var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.directives', 'app.auth', 'app.admin']);
+var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.directives', 'app.auth', 'app.admin', 'app.infoModule']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "Alert",
     function($rootScope, $state, $stateParams, $location, $cookies, AuthService, UserService, Alert){
@@ -86,11 +86,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
         ];
 
         $stateProvider
-            .state("index", {
+            .state("overview", {
                 url: "/",
                 views: {
                     "": {
                         templateUrl: "/template/index.html"
+                    }
+                },
+                resolve: relogService,
+                access_control: 0
+            })
+            .state("info", {
+                url: "/info",
+                views: {
+                    "": {
+                        templateUrl: "/template/index.html"
+                    },
+                    "general@info": {
+                        templateUrl: "/template/submodules/info/index.html"
                     }
                 },
                 resolve: relogService,

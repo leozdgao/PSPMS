@@ -1,23 +1,11 @@
 <nav class="navbar navbar-default"  ng-Controller="NavBarController">
     <div class="navbar-header">
-        <a class="navbar-brand" ui-sref="index">
+        <a class="navbar-brand" ui-sref="overview">
         	<span class="glyphicon glyphicon-home"></span>
         	 PSPMS
         </a>
     </div>
     <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-            <li ui-sref-active="active">
-                <a ui-sref="index">Info</a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="report">Report</a>
-            </li>
-            <li ui-sref-active="active" ng-if="auth.isAdmin()">
-                <a ui-sref="admin">Manage</a>
-            </li>
-        </ul>
-
         <!-- not auth -->
         <button class="btn btn-default navbar-btn navbar-right" ng-click="showLoginPanel()"
                 ng-hide="auth.isAuthenticated()">Login</button>
@@ -32,8 +20,24 @@
     </div>
 </nav>
 
-<div ui-view="general"></div>
-<!-- <div login></div> -->
+<div>
+    <div class="sidebar col-md-2">
+        <div class="panel panel-default">
+            <!-- <div class="panel-heading">Functionality</div> -->
+            <div class="list-group">
+                <a class="list-group-item" ui-sref-active="active" ui-sref="overview">
+                    <i class="glyphicon glyphicon-signal"></i> Overview</a>
+                <a class="list-group-item" ui-sref-active="active" ui-sref="info">
+                    <i class="glyphicon glyphicon-th-list"></i> Information</a>
+                <a class="list-group-item" ui-sref-active="active" ui-sref="report">
+                    <i class="glyphicon glyphicon-leaf"></i> Report</a>
+                <a class="list-group-item" ui-sref-active="active" ui-sref="admin" ng-if="auth.isAdmin()">
+                    <i class="glyphicon glyphicon-cog"></i> Manage</a>
+            </div>    
+        </div>
+    </div>
+    <div class="content col-md-offset-2 col-md-10 container-fluid" ui-view="general"></div>
+</div>
 
 <div class="alert-list">
     <alert ng-repeat="alert in alertModule.alerts" type="{{alert.type}}" close="alertModule.onClose(alert.key)">
