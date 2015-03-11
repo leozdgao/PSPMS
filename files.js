@@ -22,7 +22,8 @@ module.exports = {
 		"assets/lib/*.js"
 	],
 	css: [
-		"app/src/global.css"
+		"app/src/global.css",
+		"app/src/submodules/**/*.css"
 	],
 	monignore: [
 		'app/**/*.js'

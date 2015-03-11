@@ -20,10 +20,9 @@
     </div>
 </nav>
 
-<div>
-    <div class="sidebar col-md-2">
+<div class="clearfix">
+    <div class="sidebar">
         <div class="panel panel-default">
-            <!-- <div class="panel-heading">Functionality</div> -->
             <div class="list-group">
                 <a class="list-group-item" ui-sref-active="active" ui-sref="overview">
                     <i class="glyphicon glyphicon-signal"></i> Overview</a>
@@ -36,7 +35,7 @@
             </div>    
         </div>
     </div>
-    <div class="content col-md-offset-2 col-md-10 container-fluid" ui-view="general"></div>
+    <div class="content container-fluid" ui-view="general"></div>
 </div>
 
 <div class="alert-list">

@@ -1,0 +1,41 @@
+.company-list {
+	position: fixed;
+	top: 52px;
+	left: 270px;
+	bottom: 0;
+	overflow-y: scroll;
+	padding: 0;
+	width: 270px;
+}
+.company-list .searchbox {
+	position: fixed;
+	top: 52px;
+	left: 270px;
+	width: 253px;
+	height: 34px;
+	z-index: 2;
+}
+.company-list .glyphicon-search {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 3;
+}
+.company-list input {
+	padding-left: 30px;
+}
+.company-list .list-group {
+	padding-top: 34px;
+}
+.company-panel {
+	margin-left: 270px;
+	padding: 0 20px;
+	/*min-width: 600px;*/
+}
+.company-panel .company-content {
+	min-width: .01%;
+	overflow-x: auto;
+}
+.company-panel .fun-panel {
+	margin: 10px 0;
+}

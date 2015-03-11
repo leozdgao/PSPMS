@@ -1,8 +1,10 @@
 angular.module("app.datacenter", ["ngResource"])
 
 .factory("Company", ["$resource", function ($resource) {
-	return $resource("/rest/company", null, {
-		query: { method: "GET", isArray: true, headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }, cache: false },
+	return $resource("/rest/company/:cid", null, {
+		get: { method: "GET", cache: false },
+		query: { method: "GET", isArray: true, cache: false },
+		getProjectBasic: { method: "GET", url: "/rest/company/:cid/projects", isArray: true, cache: false },
 		insert: { method: "POST" },
 		update: { method: "PUT" },
 		remove: { method: "DELETE" }
@@ -11,7 +13,7 @@ angular.module("app.datacenter", ["ngResource"])
 
 .factory("Project", ["$resource", function ($resource) {
 	return $resource("/rest/project", null, {
-		query: { method: "GET", isArray: true, headers: { "Pragma": "no-cache", "Cache-Control": "no-cache" }, cache: false },
+		query: { method: "GET", isArray: true, cache: false },
 		insert: { method: "POST" },
 		update: { method: "PUT" },
 		remove: { method: "DELETE" }

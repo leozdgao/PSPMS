@@ -1,0 +1,19 @@
+<h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
+<div class="fun-panel">
+    <button class="btn btn-success">Edit company</button>
+    <button class="btn btn-primary">Add project</button>    
+</div>
+<table class="table">
+    <tr class="active">
+        <th>Name</th>
+        <th>StartDate</th>
+        <th>LastUpdateDate</th>
+        <th>Status</th>
+    </tr>
+    <tr ng-repeat="p in projectList">
+        <td>{{p.name}}</td>
+        <td>{{p.startDate | date:'yyyy-MM-dd'}}</td>
+        <td>{{p.lastUpdateDate | date:'yyyy-MM-dd'}}</td>
+        <td>{{p.status}}</td>
+    </tr>
+</table>

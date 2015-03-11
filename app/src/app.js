@@ -1,4 +1,6 @@
-var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.directives', 'app.auth', 'app.admin', 'app.infoModule']);
+var app = angular.module("pspms", ['ngCookies', 'ui.router',
+                                   'app.directives', 'app.auth', 'app.filters',
+                                   'app.admin', 'app.infoModule']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "Alert",
     function($rootScope, $state, $stateParams, $location, $cookies, AuthService, UserService, Alert){
@@ -28,6 +30,7 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthS
 
         $rootScope.$on("$stateChangeError", function(e, to, toParams, from, fromParams, error) {
             
+            console.log(error);
             console.log('error');
         });
 
@@ -103,11 +106,23 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                         templateUrl: "/template/index.html"
                     },
                     "general@info": {
-                        templateUrl: "/template/submodules/info/index.html"
+                        templateUrl: "/template/submodules/info/index.html",
+                        controller: "InfoController"
                     }
                 },
                 resolve: relogService,
                 access_control: 0
+            })
+            .state("info.company", {
+                url: "/:companyId",
+                templateUrl: "/template/submodules/info/company/info.html",
+                controller: "CompanyController",
+                resolve: {
+                    CurrentCompany: ['$stateParams', 'CompanyFactory', function($stateParams, CompanyFactory) {
+                        var cid = $stateParams.companyId;
+                        return CompanyFactory.get(cid);
+                    }]
+                }
             })
             .state("report", {
                 url: "/report",
@@ -126,7 +141,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                         templateUrl: "/template/index.html"
                     },
                     "general@admin": {
-                        templateUrl: "/template/submodules/admin/index.html"
+                        templateUrl: "/template/submodules/admin/index.html",
+                        controller: "ManagerController"
                     }
                 },
                 resolve: relogService,

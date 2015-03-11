@@ -1,3 +1,7 @@
+body {
+	/*min-width: 1200px;*/
+}
+
 /*reset navbar margin*/
 .navbar {
 	margin: 0;
@@ -20,40 +24,6 @@
 
 .admin-panel {
 	padding: 20px;	
-}
-
-.company-list {
-	position: fixed;
-	top: 52px;
-	left: 270px;
-	bottom: 0;
-	overflow-y: scroll;
-	padding: 0;
-	width: 270px;
-}
-.company-list .searchbox {
-	position: fixed;
-	top: 52px;
-	left: 270px;
-	width: 253px;
-	height: 34px;
-	z-index: 10;
-}
-.company-list i {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-}
-.company-list input {
-	padding-left: 30px;
-}
-.company-list .list-group {
-	padding-top: 34px;
-}
-
-.company-panel {
-	margin-left: 300px;
-	padding-top: 20px;
 }
 
 .alert-list {
