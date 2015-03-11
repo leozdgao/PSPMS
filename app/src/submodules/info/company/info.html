@@ -11,9 +11,9 @@
         <th>Status</th>
     </tr>
     <tr ng-repeat="p in projectList">
-        <td>{{p.name}}</td>
+        <td><a ui-sref="info.company.project({pid: p.projectId})">{{p.name}}</a></td>
         <td>{{p.startDate | date:'yyyy-MM-dd'}}</td>
         <td>{{p.lastUpdateDate | date:'yyyy-MM-dd'}}</td>
-        <td>{{p.status}}</td>
+        <td><span class="label" ng-class="statusStyle(p.status)">{{p.status | projectStatus}}</span></td>
     </tr>
 </table>

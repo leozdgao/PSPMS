@@ -115,13 +115,29 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
             })
             .state("info.company", {
                 url: "/:companyId",
-                templateUrl: "/template/submodules/info/company/info.html",
-                controller: "CompanyController",
+                views: {
+                    "content": {
+                        templateUrl: "/template/submodules/info/company/info.html",
+                        controller: "CompanyController",        
+                    }
+                },
                 resolve: {
                     CurrentCompany: ['$stateParams', 'CompanyFactory', function($stateParams, CompanyFactory) {
                         var cid = $stateParams.companyId;
                         return CompanyFactory.get(cid);
                     }]
+                }
+            })
+            .state("info.company.project", {
+                url: "/:pid",
+                views: {
+                    "content@info": {
+                        templateUrl: "/template/submodules/info/project/info.html",
+                        controller: "ProjectController",
+                    }
+                },                
+                resolve: {
+                    // CurrentProject: []
                 }
             })
             .state("report", {

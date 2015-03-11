@@ -15,7 +15,9 @@ angular.module("app.infoModule", ['app.datacenter', 'app.directives'])
 
         Company.query().$promise
             .then(function(companies){
+                // update cache and index
                 CompanyFactory.refresh(companies);
+                // sort
                 sortCompany();
             })
             .catch(function() {

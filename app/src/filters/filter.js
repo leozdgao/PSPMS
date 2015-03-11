@@ -56,5 +56,33 @@ angular.module('app.filters', [])
         }
         else return '';
     }
-});
+})
+
+.filter('projectStatus', function() {
+	return function(status) {
+		switch(status) {
+			case 0: return "Pending";
+			case 1: return "Not Started";
+			case 2: return "In Progress";
+			case 3: return "Finished";
+			case 4: return "Upgrading";
+			case 9: return "Closed";
+			default: return "";
+		}
+	}
+})
+
+.filter('projectStatusStyle', function() {
+	return function(status) {
+		switch(status) {
+			case 0: return "label-default";
+			case 1: return "label-warning";
+			case 2: return "label-success";
+			case 3: return "label-primary";
+			case 4: return "label-info";
+			case 9: return "label-danger";
+			default: return "";
+		}
+	}
+})
 

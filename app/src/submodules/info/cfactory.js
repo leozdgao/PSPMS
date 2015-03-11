@@ -45,7 +45,6 @@ angular.module("app.infoModule")
         },
         // update project basic
         putProjectBasic: function(cid, projects) {
-
         	p_cache[cid] = projects;
         },
         // index companies
