@@ -7,8 +7,9 @@ angular.module('app.directives')
 
         return {
 
-            //method for show the message box
-            //return a promise
+            // method for show the message box
+            // style [alert]/[confirm]
+            // return a promise
 
             show: function(message, opt) {
 

@@ -38,6 +38,7 @@
 	left: 100%;
 	margin-top: -9px;
 	margin-left: -26px;
+	background: #aaa;
 }
 .company-panel {
 	margin-left: 270px;
@@ -45,8 +46,8 @@
 	/*min-width: 600px;*/
 }
 .company-panel .company-content {
-	min-width: .01%;
-	overflow-x: auto;
+	/*min-width: .01%;*/
+	/*overflow-x: auto;*/
 }
 .company-panel .fun-panel {
 	margin: 10px 0;
@@ -54,4 +55,8 @@
 }
 .company-panel .fun-panel a {
 	margin: 0 5px;
+}
+
+#editCompanyForm {
+	max-width: 800px;
 }

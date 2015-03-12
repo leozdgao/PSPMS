@@ -19,6 +19,18 @@ angular.module("app.auth", [])
 				}
 
 				return config;
+			},
+			responseError: function(rejection) {
+				if(rejection.status == 401) {
+					var session = UserService.getSession();
+					if(session && session.expire < Date.now()) {
+						// session expired
+						UserService.setSession(void(0));	
+					}
+					rejection.msg = "Unauthorized operation."
+				}
+
+				return $q.reject(rejection);
 			}
 		};
 	}

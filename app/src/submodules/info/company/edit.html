@@ -1,0 +1,39 @@
+<h2>Edit: {{CurrentCompany.name}}</h2>
+<div class="fun-panel">
+    <a tooltip-trigger="mouseenter" tooltip-placement="right" tooltip="Back" ui-sref="info.company({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-arrow-left"></i></a>
+</div>
+<form id="editCompanyForm" class="form-horizontal" novalidate>
+    <fieldset>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="name">Company Name</label>
+            <div class="col-md-10">
+                <input id="name" class="form-control" name="name" type="text" ng-model="eObj.name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="clientId" class="col-md-2 control-label">ClientID</label>
+            <div class="col-md-10">
+                <input id="clientId" class="form-control" name="clientId" type="text" ng-model="eObj.clientId">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="serverFolder" class="col-md-2 control-label">Server Folder</label>
+            <div class="col-md-10">
+                <input id="serverFolder" class="form-control" name="serverFolder" type="text" ng-model="eObj.serverFolder">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="perforceFolder" class="col-md-2 control-label">Perforce Folder</label>
+            <div class="col-md-10">
+                <input id="perforceFolder" class="form-control" name="perforceFolder" type="text" ng-model="eObj.perforceFolder">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-primary" ng-click="submit()">Submit</button>
+                <button class="btn btn-default" ui-sref="info.company({companyId: CurrentCompany.companyId})">Cancel</button>
+                <button class="btn btn-danger pull-right" ng-click="remove()">Remove</button>
+            </div>
+          </div>
+    </fieldset>
+</form>

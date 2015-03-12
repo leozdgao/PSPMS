@@ -1,9 +1,9 @@
 <h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
 <div class="fun-panel">
-    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"><i class="glyphicon glyphicon-plus"></i></a>
-    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"><i class="glyphicon glyphicon-new-window"></i></a> 
-    <!-- <button class="btn btn-success">Edit company</button> -->
-    <!-- <button class="btn btn-primary">Add project</button>     -->
+    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"
+       ><i class="glyphicon glyphicon-plus"></i></a>
+    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
+       ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
 </div>
 <table class="table">
     <tr class="active">

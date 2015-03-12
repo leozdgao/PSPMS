@@ -123,9 +123,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                 },
                 resolve: {
                     CurrentCompany: ['$stateParams', 'CompanyFactory', function($stateParams, CompanyFactory) {
-                        var cid = $stateParams.companyId;
+                        var cid = $stateParams.companyId; console.log('get c');
                         return CompanyFactory.get(cid);
                     }]
+                }
+            })
+            .state("info.company.edit", {
+                url: "/edit",
+                views: {
+                    "content@info": {
+                        templateUrl: "/template/submodules/info/company/edit.html",
+                        controller: "EditCompanyController"
+                    }
                 }
             })
             .state("info.company.project", {
