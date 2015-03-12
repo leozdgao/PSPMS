@@ -5,7 +5,7 @@ var files = require('./files');
 // release
 gulp.task('default', ['release']);
 gulp.task('release', ['assets']); // add jslint and uTest later maybe
-gulp.task('assets', ['copyTemplate', 'assets:css', 'assets:js']);
+gulp.task('assets', ['copyTemplate', 'assets:css', 'assets:js', 'copy:lib']);
 
 gulp.task('dev', ['concat', 'watch', 'server']);
 gulp.task('concat', ['concat:css', 'concat:js']);
@@ -23,6 +23,12 @@ gulp.task('server', function() {
 			ignore: files.monignore,
 			ext: "js"
 		});
+});
+
+gulp.task('copy:lib', function() {
+
+	return gulp.src(files.lib)
+			.pipe(gulp.dest(files.librealse || files.release));
 });
 
 // concat css

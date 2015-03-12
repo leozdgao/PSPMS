@@ -1,4 +1,18 @@
 module.exports = {
+	lib: [
+		"node_modules/angular/angular.min.js",
+		"node_modules/angular/angular.min.js.map",
+		"node_modules/angular-bootstrap/dist/ui-bootstrap.min.js",
+		"node_modules/angular-cookies/angular-cookies.min.js",
+		"node_modules/angular-cookies/angular-cookies.min.js.map",
+		"node_modules/angular-messages/angular-messages.min.js",
+		"node_modules/angular-messages/angular-messages.min.js.map",
+		"node_modules/angular-resource/angular-resource.min.js",
+		"node_modules/angular-resource/angular-resource.min.js.map",
+		"node_modules/angular-ui-router/release/angular-ui-router.min.js",
+		"node_modules/bootstrap/dist/css/bootstrap.min.css",
+		"node_modules/bootstrap/dist/css/bootstrap.css.map"
+	],
 	js: [
 		"app/src/app.js",
 		"app/src/auth/auth.js",
@@ -33,5 +47,6 @@ module.exports = {
 	destJs: 'script.js',
 	destCss: 'style.css',
 	destLib: 'assets/release',
-	release: 'assets/release'
+	release: 'assets/release',
+	librealse: 'assets/lib'
 }

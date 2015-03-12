@@ -28,16 +28,31 @@ angular.module("app.infoModule")
 .controller('EditCompanyController', ['$scope', '$state', 'CurrentCompany', 'CompanyFactory', 'MessageBox', 'Alert',
     function($scope, $state, CurrentCompany, CompanyFactory, MessageBox, Alert){
         $scope.CurrentCompany = CurrentCompany;
-        $scope.eObj = angular.copy($scope.CurrentCompany);
+        $scope.eObj = angular.copy(CurrentCompany);
+        $scope.formstate = {
+            submitting: false,
+            submited: false,
+            isValid: function() {
+
+            }
+        };
         $scope.submit = function() {
-            CompanyFactory.set($scope.CurrentCompany.companyId, $scope.eObj)
-                .then(function() {
-                    // $state.go('info.company', {companyId: $scope.CurrentCompany.companyId});
-                    $state.transitionTo('info.company', {companyId: $scope.CurrentCompany.companyId}, {reload: true});
-                })
-                .catch(function(e) {
-                    Alert.add(e.msg || 'Error occurred while submit company.', 'danger');
-                })
+            $scope.formstate.submited = true;
+            if($scope.editCompanyForm.$dirty && $scope.editCompanyForm.$valid) {
+                $scope.formstate.submitting = true;
+                CompanyFactory.set(CurrentCompany.companyId, $scope.eObj)
+                    .then(function() {
+                        
+                        $scope.formstate.submitting = false;
+                        $state.transitionTo('info.company', {companyId: CurrentCompany.companyId}, {reload: true});
+                    })
+                    .catch(function(e) {
+                        Alert.add(e.msg || 'Error occurred while submit company.', 'danger');
+                    });    
+            }
+            else {
+                $state.go('info.company', {companyId: $scope.CurrentCompany.companyId});
+            }
         };
         $scope.remove = function() {
             MessageBox.show("Remove this company?", { style: 'confirm' })
