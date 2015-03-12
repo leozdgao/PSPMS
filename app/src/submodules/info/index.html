@@ -10,7 +10,7 @@
 		<div class="list-group">
 			<a class="list-group-item" ng-repeat="company in sortedCompanies"
 			   ui-sref="info.company({companyId: {{company.companyId}}})"
-			   ui-sref-active="list-group-item-info">{{company.name}}</a>
+			   ui-sref-active="list-group-item-info">{{company.name}} <span class="badge">{{company.projects.length}}</span></a>
 		</div>
 	</div>
 	<div class="company-panel">

@@ -3,6 +3,7 @@
 	top: 52px;
 	left: 270px;
 	bottom: 0;
+	overflow-x: hidden;
 	overflow-y: scroll;
 	padding: 0;
 	width: 270px;
@@ -27,6 +28,17 @@
 .company-list .list-group {
 	padding-top: 34px;
 }
+.company-list .list-group-item {
+	position: relative;
+	padding-right: 28px;
+}
+.company-list .badge {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	margin-top: -9px;
+	margin-left: -26px;
+}
 .company-panel {
 	margin-left: 270px;
 	padding: 0 20px;
@@ -38,4 +50,8 @@
 }
 .company-panel .fun-panel {
 	margin: 10px 0;
+	font-size: 1em;
+}
+.company-panel .fun-panel a {
+	margin: 0 5px;
 }
