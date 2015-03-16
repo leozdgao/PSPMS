@@ -18,12 +18,21 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
             },
             access_control: 0
         })
+        .state("info.companyAdd", {
+            url: "/add",
+            views: {
+                "content": {
+                    templateUrl: "/template/submodules/info/company/add.html",
+                    controller: "AddCompanyController"
+                }
+            }
+        })
         .state("info.company", {
             url: "/:companyId",
             views: {
                 "content": {
                     templateUrl: "/template/submodules/info/company/info.html",
-                    controller: "CompanyController",        
+                    controller: "CompanyController"        
                 }
             },
             resolve: {
@@ -58,7 +67,7 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
 
 .controller('InfoController', ['$scope', 'Alert', 'CompanyFactory',
     function($scope, Alert, CompanyFactory) {
-        console.log('InfoController called.');
+        // console.log('InfoController called.');
         $scope.filter = CompanyFactory.filter;
         
         $scope.$watch('filter.text', function(newVal, oldVal) {

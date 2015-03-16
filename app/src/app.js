@@ -101,7 +101,7 @@ app.controller("NavBarController", ["$scope", "$state", "$location", "$cookies",
     "UserService", "Alert",
     function($scope, $state, $location, $cookies, LoginPanel, AuthService, UserService, Alert) {
 
-        console.log('NavBarController called.');
+        // console.log('NavBarController called.');
         
         $scope.showLoginPanel = function() {
 

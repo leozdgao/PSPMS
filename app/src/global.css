@@ -3,7 +3,7 @@ body {
 	font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
 }
-a:hover{ text-decoration: none; }
+a:hover{ text-decoration: none; cursor: pointer; }
 
 /*reset navbar margin*/
 .navbar {
@@ -28,6 +28,7 @@ a:hover{ text-decoration: none; }
 .content {
 	/*padding: 0;*/
 	margin-left: 270px;
+	/*padding-left: calc(100vw - 100%);*/
 }
 
 .admin-panel {

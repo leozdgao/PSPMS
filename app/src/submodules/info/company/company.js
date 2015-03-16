@@ -40,7 +40,7 @@ angular.module("app.infoModule")
             submitting: false,
             submited: false,
             isInvalid: function(key) {
-                return $scope.editCompanyForm[key].$invalid;
+                return (this.submited || $scope.editCompanyForm.$dirty) && $scope.editCompanyForm[key].$invalid;
             }
         };
         $scope.submit = function() {
@@ -60,7 +60,7 @@ angular.module("app.infoModule")
             }
             else {
                 Alert.add('Cancel submitting for no changes.');
-                $state.go('info.company', {companyId: $scope.CurrentCompany.companyId});
+                $state.go('info.company', {companyId: CurrentCompany.companyId});
             }
         };
         $scope.remove = function() {
@@ -69,5 +69,60 @@ angular.module("app.infoModule")
 
                 })
         };
+        $scope.cancel = function() {
+            $state.go('info.company', {companyId: CurrentCompany.companyId});
+        };
     }
 ])
+
+.controller('AddCompanyController', ['$scope', function($scope){
+    $scope.isnew = true;
+    $scope.obj = { test: "aa" };
+
+    $scope.opts = {
+        formClass: "form-horizontal",
+        keys: {
+            "name": {
+                "label": "Company Name",
+                // "type": "text",
+                "attrs": {
+                    "ng-required": true
+                },
+                "validate": {
+                    "required": "Company Name is requied."
+                }
+            },
+            "clientId": {
+                "label": "ClientID",
+                // "type": "text",
+                "attrs": {
+                    "ng-required": true,
+                    "tooltip-trigger": "focus",
+                    "tooltip-placement": "right",
+                    "tooltip": '"Recommend that clientID starts with \'30\' and its length better be 10."'
+                },
+                "validate": {
+                    "required": "ClientID is requied."
+                }
+            },
+            "serverFolder": {
+                "label": "ServerFolder",
+                "attrs": {
+                    "ng-required": true,
+                    "tooltip-trigger": "focus",
+                    "tooltip-placement": "right",
+                    "tooltip": '"Folder name on server 208."'
+                }
+            }, 
+            "perforceFolder": {
+                "label": "PerforceFolder",
+                "attrs": {
+                    "ng-required": true,
+                    "tooltip-trigger": "focus",
+                    "tooltip-placement": "right",
+                    "tooltip": '"Folder name on P4v."'
+                }
+            } 
+        }
+    }
+}])

@@ -1,6 +1,7 @@
-<h2>Edit: {{CurrentCompany.name}}</h2>
-<div class="fun-panel">
-    <a tooltip-trigger="mouseenter" tooltip-placement="right" tooltip="Back" ui-sref="info.company({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-arrow-left"></i></a>
+<h2 ng-if="!isnew">Edit: {{CurrentCompany.name}}</h2>
+<h2 ng-if="isnew">New Company</h2>
+<div class="fun-panel" ng-if="!isnew">
+    <a tooltip-trigger="mouseenter" tooltip-placement="right" tooltip="Back" ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i></a>
 </div>
 <form id="editCompanyForm" name="editCompanyForm" class="form-horizontal" novalidate>
     <fieldset ng-disabled="formstate.submitting">
@@ -46,7 +47,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button class="btn btn-primary btn-sm" ng-click="submit()">Submit</button>
-                <button class="btn btn-default btn-sm" ui-sref="info.company({companyId: CurrentCompany.companyId})">Cancel</button>
+                <button class="btn btn-default btn-sm" ng-click="cancel()">Cancel</button>
                 <button class="btn btn-danger btn-sm pull-right" ng-click="remove()">Remove</button>
             </div>
           </div>
