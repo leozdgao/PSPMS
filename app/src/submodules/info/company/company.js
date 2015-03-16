@@ -67,7 +67,7 @@ angular.module("app.infoModule")
             MessageBox.show("Remove this company?", { style: 'confirm' })
                 .then(function() {
 
-                })
+                });
         };
         $scope.cancel = function() {
             $state.go('info.company', {companyId: CurrentCompany.companyId});
@@ -82,47 +82,66 @@ angular.module("app.infoModule")
     $scope.opts = {
         formClass: "form-horizontal",
         keys: {
-            "name": {
-                "label": "Company Name",
-                // "type": "text",
-                "attrs": {
+            name: {
+                label: "Company Name",
+                attrs: {
                     "ng-required": true
                 },
-                "validate": {
-                    "required": "Company Name is requied."
+                validate: {
+                    required: "Company Name is requied."
                 }
             },
-            "clientId": {
-                "label": "ClientID",
-                // "type": "text",
-                "attrs": {
+            clientId: {
+                label: "ClientID",
+                attrs: {
                     "ng-required": true,
                     "tooltip-trigger": "focus",
                     "tooltip-placement": "right",
-                    "tooltip": '"Recommend that clientID starts with \'30\' and its length better be 10."'
+                    tooltip: '"Recommend that clientID starts with \'30\' and its length better be 10."'
                 },
-                "validate": {
-                    "required": "ClientID is requied."
+                validate: {
+                    required: "ClientID is requied."
                 }
             },
-            "serverFolder": {
-                "label": "ServerFolder",
-                "attrs": {
+            serverFolder: {
+                label: "ServerFolder",
+                attrs: {
                     "ng-required": true,
                     "tooltip-trigger": "focus",
                     "tooltip-placement": "right",
-                    "tooltip": '"Folder name on server 208."'
+                    tooltip: '"Folder name on server 208."'
+                },
+                validate: {
+                    required: "Server folder is requied."
                 }
             }, 
-            "perforceFolder": {
-                "label": "PerforceFolder",
-                "attrs": {
+            perforceFolder: {
+                label: "PerforceFolder",
+                attrs: {
                     "ng-required": true,
                     "tooltip-trigger": "focus",
                     "tooltip-placement": "right",
-                    "tooltip": '"Folder name on P4v."'
+                    tooltip: '"Folder name on P4v."'
+                },
+                validate: {
+                    required: "Perforce folder is requied."
                 }
             } 
+        },
+        buttonGroup: {
+            // exist by default
+            submit: function() {
+
+            },
+            canel: function() {
+
+            },
+            // extra buttons
+            remove: {
+                text: "Remove",
+                className: "btn btn-danger btn-sm pull-right",
+                click: function() {}
+            }
         }
     }
-}])
+}]);

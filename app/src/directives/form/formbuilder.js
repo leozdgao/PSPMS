@@ -10,7 +10,7 @@ angular.module('app.directives')
             obj: "=",
             opts: "="
         }, // {} = isolate, true = child, false/undefined = no change
-        // controller: 'CusformController',
+        controller: 'CusformController',
         require: 'form', // Array = multiple requires, ? = optional, ^ = check parent elements
         restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
         template: '<form name="cusform" novalidate></form>',
@@ -46,10 +46,11 @@ angular.module('app.directives')
                 settings.type = settings.type || 'text';
 
                 var control = angular.element(
-                    '<div class="form-group" ng-class="{' + '\'has-error\': formstate.isInvalid(\'' + key + '\') }">'
-                    + '</div>');
+                    '<div class="form-group" ng-class="{' + '\'has-error\': formstate.isInvalid(\'' + key + '\') }">' +
+                    '</div>');
                 control.append(getLabel(key, settings.label));
                 control.append(getInputString(key, settings.type, settings.attrs));
+                control.append(getHelpblock(key, settings.validate));
 
                 formEle.append(control);
             }
@@ -66,8 +67,10 @@ angular.module('app.directives')
             }
             // return input according type
             function getInputString(name, type, attrs) {
-                var text = '<div><input class="form-control"'
-                           + ' name="' + name + '"' + ' ng-model="eObj.' + name + '"'
+                var text = '<div><input class="form-control"' +
+                ' name="' + name + '"' + ' ng-model="eObj.' + name + '"';
+
+                // TODO: other type
 
                 for(var val in attrs) {
                     text += (' ' + val + '=' + attrs[val]);
@@ -79,6 +82,25 @@ angular.module('app.directives')
                 
                 return input;
             }
+            // return help-block related to ng-messages
+            function getHelpblock(name, validates) {
+
+                /*<div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.serverFolder.$error">
+                    <span class="help-block" ng-message="required">Server folder is required.</span>
+                </div>*/
+                var helpblock = angular.element('<div ng-messages="cusform.'+ name + '.$error"></div>');
+                if(style === 'horizontal') helpblock.addClass('col-md-offset-2 col-md-10');
+
+                if(validates) {
+                    for(var key in validates) {
+                        // <span class="help-block" ng-message="required">Server folder is required.</span>
+                        var text = validates[key];
+                        helpblock.append('<span class="help-block" ng-message="' + key + '"">' + text + '</span>');
+                    }    
+                }
+
+                return helpblock;
+            }
         }
     };
 }])
@@ -88,5 +110,12 @@ angular.module('app.directives')
         console.log('Controller called');
         // var eObj = 
         $scope.eObj = ($scope.obj && angular.copy($scope.obj)) || {};
+        $scope.formstate = {
+            submitting: false,
+            submited: false,
+            isInvalid: function(key) {
+                return (this.submited || $scope.cusform[key].$dirty) && $scope.cusform[key].$invalid;
+            }
+        };
     }
-])
+]);
