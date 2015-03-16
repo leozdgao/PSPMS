@@ -1,5 +1,25 @@
 angular.module('app.admin', ['app.datacenter', 'app.directives'])
 
+.config(['$stateProvider', function($stateProvider) {
+	$stateProvider
+		.state("admin", {
+		    url: "/admin",
+		    views: {
+		        "": {
+		            templateUrl: "/template/index.html"
+		        },
+		        "general@admin": {
+		            templateUrl: "/template/submodules/admin/index.html",
+		            controller: "ManagerController"
+		        }
+		    },
+		    resolve: {
+		        isLogged: 'RelogService'
+		    },
+		    access_control: -1
+		});
+}])
+
 .controller('ManagerController', ['$scope', 'UserService', 'Resource', 'EditPanel',
 	'AccountPanel', 'MessageBox', 'ResourceList', 'Alert',
 	function ($scope, UserService, Resource, EditPanel, AccountPanel, MessageBox, ResourceList, Alert) {

@@ -1,11 +1,18 @@
 body {
 	/*min-width: 1200px;*/
+	font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
 }
 a:hover{ text-decoration: none; }
 
 /*reset navbar margin*/
 .navbar {
 	margin: 0;
+}
+
+/*reset helpblock style*/
+.help-block {
+	margin-bottom: 0px;
 }
 
 .sidebar {

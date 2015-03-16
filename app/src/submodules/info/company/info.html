@@ -1,21 +1,26 @@
-<h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
-<div class="fun-panel">
-    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"
-       ><i class="glyphicon glyphicon-plus"></i></a>
-    <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
-       ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
+<div ng-if="CurrentCompany">
+    <h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
+    <div class="fun-panel" ng-if="auth.isAuthenticated(2)">
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"
+           ><i class="glyphicon glyphicon-plus"></i></a>
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
+           ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
+    </div>
+    <table class="table">
+        <tr class="active">
+            <th>Name</th>
+            <th>StartDate</th>
+            <th>LastUpdateDate</th>
+            <th>Status</th>
+        </tr>
+        <tr ng-repeat="p in projectList">
+            <td><a ui-sref="info.company.project({pid: p.projectId})">{{p.name}}</a></td>
+            <td>{{p.startDate | date:'yyyy-MM-dd'}}</td>
+            <td>{{p.lastUpdateDate | date:'yyyy-MM-dd'}}</td>
+            <td><span class="label" ng-class="statusStyle(p.status)">{{p.status | projectStatus}}</span></td>
+        </tr>
+    </table>    
 </div>
-<table class="table">
-    <tr class="active">
-        <th>Name</th>
-        <th>StartDate</th>
-        <th>LastUpdateDate</th>
-        <th>Status</th>
-    </tr>
-    <tr ng-repeat="p in projectList">
-        <td><a ui-sref="info.company.project({pid: p.projectId})">{{p.name}}</a></td>
-        <td>{{p.startDate | date:'yyyy-MM-dd'}}</td>
-        <td>{{p.lastUpdateDate | date:'yyyy-MM-dd'}}</td>
-        <td><span class="label" ng-class="statusStyle(p.status)">{{p.status | projectStatus}}</span></td>
-    </tr>
-</table>
+<div ng-if="!CurrentCompany">
+    Can't fetch data from the server, please check the internet connection.
+</div>

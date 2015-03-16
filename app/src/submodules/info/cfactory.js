@@ -3,7 +3,7 @@ angular.module("app.infoModule")
 .factory('CompanyFactory', ['$q' ,'Company', function($q, Company){
     var index = {}, cache = [], p_cache = {};
     var lastupdate, lastmodify; // flags for company tree updating
-    var countChange = false, filter = {text: "" };
+    var countChange = false, filter = { text: "" };
 
     return {
         filter: filter,

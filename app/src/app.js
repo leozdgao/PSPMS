@@ -62,32 +62,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
         AuthServiceProvider.authUrl.logout = "/user/logout";
         AuthServiceProvider.authUrl.relog = "/user/relog";
 
-        var relogService = ['$q', '$cookies', 'AuthService', 'UserService', 'Alert',
-            function($q, $cookies, AuthService, UserService, Alert) {
-
-                var defer = $q.defer();
-                var oldToken = $cookies.token;
-
-                if(!AuthService.isAuthenticated() && angular.isDefined(oldToken)) {
-
-                    AuthService.relog(oldToken)
-                        .then(function(resource) {
-
-                            Alert.add("Welcome! " + resource.name, "success");
-                        })
-                        .finally(function(){ 
-
-                            defer.resolve();
-                        });
-                }
-                else {
-                    defer.resolve();
-                }
-
-                return defer.promise;
-            }
-        ];
-
         $stateProvider
             .state("overview", {
                 url: "/",
@@ -96,58 +70,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                         templateUrl: "/template/index.html"
                     }
                 },
-                resolve: relogService,
-                access_control: 0
-            })
-            .state("info", {
-                url: "/info",
-                views: {
-                    "": {
-                        templateUrl: "/template/index.html"
-                    },
-                    "general@info": {
-                        templateUrl: "/template/submodules/info/index.html",
-                        controller: "InfoController"
-                    }
-                },
-                resolve: relogService,
-                access_control: 0
-            })
-            .state("info.company", {
-                url: "/:companyId",
-                views: {
-                    "content": {
-                        templateUrl: "/template/submodules/info/company/info.html",
-                        controller: "CompanyController",        
-                    }
-                },
                 resolve: {
-                    CurrentCompany: ['$stateParams', 'CompanyFactory', function($stateParams, CompanyFactory) {
-                        var cid = $stateParams.companyId; console.log('get c');
-                        return CompanyFactory.get(cid);
-                    }]
-                }
-            })
-            .state("info.company.edit", {
-                url: "/edit",
-                views: {
-                    "content@info": {
-                        templateUrl: "/template/submodules/info/company/edit.html",
-                        controller: "EditCompanyController"
-                    }
-                }
-            })
-            .state("info.company.project", {
-                url: "/:pid",
-                views: {
-                    "content@info": {
-                        templateUrl: "/template/submodules/info/project/info.html",
-                        controller: "ProjectController",
-                    }
-                },                
-                resolve: {
-                    // CurrentProject: []
-                }
+                    isLogged: 'RelogService'
+                },
+                access_control: 0
             })
             .state("report", {
                 url: "/report",
@@ -156,23 +82,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                         templateUrl: "/template/index.html"
                     }               
                 },
-                resolve: relogService,
-                access_control: 1
-            })
-            .state("admin", {
-                url: "/admin",
-                views: {
-                    "": {
-                        templateUrl: "/template/index.html"
-                    },
-                    "general@admin": {
-                        templateUrl: "/template/submodules/admin/index.html",
-                        controller: "ManagerController"
-                    }
+                resolve: {
+                    isLogged: 'RelogService'
                 },
-                resolve: relogService,
-                access_control: -1
+                access_control: 1
             });
+            
 
         $urlRouterProvider.otherwise("/");
 

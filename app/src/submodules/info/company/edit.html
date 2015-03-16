@@ -4,28 +4,43 @@
 </div>
 <form id="editCompanyForm" name="editCompanyForm" class="form-horizontal" novalidate>
     <fieldset ng-disabled="formstate.submitting">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('name') }">
             <label class="col-md-2 control-label" for="name">Company Name</label>
             <div class="col-md-10">
-                <input id="name" class="form-control" name="name" type="text" ng-model="eObj.name" ng-required>
+                <input id="name" class="form-control" name="name" type="text" ng-model="eObj.name" required>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.name.$error">
+                <span class="help-block" ng-message="required">Company name is required.</span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('clientId') }">
             <label for="clientId" class="col-md-2 control-label">ClientID</label>
             <div class="col-md-10">
-                <input id="clientId" class="form-control" name="clientId" type="text" ng-model="eObj.clientId" ng-required>
+                <input id="clientId" class="form-control" name="clientId" type="text" ng-model="eObj.clientId" required
+                       tooltip-trigger="focus" tooltip-placement="right" tooltip="{{tips.clientId}}">
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.clientId.$error">
+                <span class="help-block" ng-message="required">ClientID is required.</span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('serverFolder') }">
             <label for="serverFolder" class="col-md-2 control-label">Server Folder</label>
             <div class="col-md-10">
-                <input id="serverFolder" class="form-control" name="serverFolder" type="text" ng-model="eObj.serverFolder" ng-required>
+                <input id="serverFolder" class="form-control" name="serverFolder" type="text" ng-model="eObj.serverFolder" required
+                       tooltip-trigger="focus" tooltip-placement="right" tooltip="{{tips.serverFolder}}">
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.serverFolder.$error">
+                <span class="help-block" ng-message="required">Server folder is required.</span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('perforceFolder') }">
             <label for="perforceFolder" class="col-md-2 control-label">Perforce Folder</label>
             <div class="col-md-10">
-                <input id="perforceFolder" class="form-control" name="perforceFolder" type="text" ng-model="eObj.perforceFolder" ng-required>
+                <input id="perforceFolder" class="form-control" name="perforceFolder" type="text" ng-model="eObj.perforceFolder" required
+                       tooltip-trigger="focus" tooltip-placement="right" tooltip="{{tips.perforceFolder}}">
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.perforceFolder.$error">
+                <span class="help-block" ng-message="required">Perforce folder is required.</span>
             </div>
         </div>
         <div class="form-group">

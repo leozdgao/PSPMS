@@ -158,3 +158,32 @@ angular.module("app.auth", [])
 	}
 )
 
+.service('RelogService', ['$q', '$cookies', 'AuthService', 'UserService', 'Alert',
+    function($q, $cookies, AuthService, UserService, Alert) {
+
+        var defer = $q.defer();
+        var oldToken = $cookies.token;
+        var islogged = false;
+
+        if(!AuthService.isAuthenticated() && angular.isDefined(oldToken)) {
+
+            AuthService.relog(oldToken)
+                .then(function(resource) {
+
+                    Alert.add("Welcome! " + resource.name, "success");
+                    islogged = true;
+                })
+                .finally(function(){ 
+
+                    defer.resolve(islogged);
+                });
+        }
+        else {
+            defer.resolve();
+        }
+
+        return defer.promise;
+	}
+]);
+
+
