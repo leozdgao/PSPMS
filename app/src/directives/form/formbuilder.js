@@ -119,7 +119,7 @@ angular.module('app.directives')
                         // generate wrapper for submitting
                         btnOptions.onclick = (function(btnOptions) {
                             return function() {
-                                $scope.formstate.submitted = true;
+                                $scope.formstate.submited = true;
                                 if($scope.cusform.$dirty && $scope.cusform.$valid) {
                                     $scope.formstate.submitting = true;
                                     // get promise
@@ -151,7 +151,9 @@ angular.module('app.directives')
                 var btn = angular.element('<button type="button">' + text || 'Button' + '</button>');
                 if(className) btn.addClass(className);
                 if(typeof onclick === 'function') {
-                    btn.bind('click', onclick);
+                    btn.bind('click', function() {
+                        $scope.$apply(onclick);
+                    });
                 }
 
                 return btn;
