@@ -76,6 +76,7 @@ angular.module('app.directives')
                     className: "btn btn-default btn-sm",
                     click: function() {}
                 }
+                // maybe some extra buttons
             ]
         }
     }

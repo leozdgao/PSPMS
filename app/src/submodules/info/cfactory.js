@@ -12,17 +12,15 @@ angular.module("app.infoModule")
             var defer = $q.defer();
 
             if(angular.isDefined(cid)) {
-                var i = index[cid]; console.log('current'); console.log(cache[i]);
+                var i = index[cid];
                 if(i >= 0 && cache[i]) defer.resolve(cache[i]);
-                else {
-                    Company.get({cid: cid}).$promise
+                else Company.get({cid: cid}).$promise
                         .then(function(result) {
                             defer.resolve(result);
                         })
                         .catch(function() {
                             defer.resolve(null);
                         });
-                }
             }
             else {
                 defer.resolve(null);
@@ -30,18 +28,31 @@ angular.module("app.infoModule")
             
             return defer.promise;
         },
+        add: function(newCompany) {
+            // add a new company, and change the lastmodify
+            return Company.insert(null, newCompany).$promise
+                        .then(function(addedCompany) {
+                            // add to cache
+                            cache.push(addedCompany);
+                            index[addedCompany] = cache.length - 1;
+                            lastmodify = Date.now();
+                        });
+        },
         set: function(cid, newCompany) {
-            // upload change
+            // upload change, it needn't change the lastmodify
             return Company.update({cid: cid}, {update: newCompany}).$promise
                         .then(function(result) {
-                            var company = result.new;
-                            console.log('cache'); console.log(cache[cid]);
-                            console.log('company'); console.log(company);
-                            var i = index[cid];
-                            if(i >=0 && cache[i]) { console.log(i);
+                            var company = result.new, i = index[cid];
+                            if(i >=0 && cache[i]) {
                                 cache[i] = company;
-                                // lastmodify = Date.now();    
                             }
+                        });
+        },
+        remove: function(cid) {
+            // remove a company, and change the lastmodify
+            return Company.remove({cid: cid}).$promise
+                        .then(function() {
+                            lastmodify = Date.now();
                         });
         },
         getProjectsBasic: function(cid) {
@@ -51,6 +62,18 @@ angular.module("app.infoModule")
             else {
                 Company.getProjectBasic({cid: cid}).$promise
                     .then(function(results) {
+                        
+                        results = results.sort(function(a, b) {
+                            return +function compare(t0, t1) {
+                                if(t0.charCodeAt(0) == t1.charCodeAt(0)) {
+                                    return compare(t0.slice(1), t1.slice(1));
+                                }
+                                else {
+                                    return t0.charCodeAt(0) - t1.charCodeAt(0);
+                                }
+                            }(a.project.name.toLowerCase(), b.project.name.toLowerCase());
+                        }).map(function(item) { return item.project; }); 
+
                         p_cache[cid] = results;
                         defer.resolve(results);
                     });
