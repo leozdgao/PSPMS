@@ -7,8 +7,8 @@ angular.module('app.directives')
         // priority: 1,
         // terminal: true,
         scope: {
-            obj: "=",
-            opts: "="
+            editObj: "=?",
+            options: "="
         }, // {} = isolate, true = child, false/undefined = no change
         controller: 'CusformController',
         require: 'form', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -29,14 +29,15 @@ angular.module('app.directives')
             console.log('link');
             
             // create form controls according the opts
-            var formEle = ele, options = angular.extend({}, $scope.opts), controlSettings = options.keys || {}, style;
+            var formEle = angular.element('<fieldset ng-disabled="formstate.submitting"></fieldset>'), options = angular.extend({}, $scope.options),
+                controlSettings = options.keys || {},  style;
 
             // add class for the form if necessary
             if(options.formClass) {
-                formEle.addClass(options.formClass);
+                ele.addClass(options.formClass);
             }
 
-            if(formEle.hasClass('form-horizontal')) style = 'horizontal';
+            if(ele.hasClass('form-horizontal')) style = 'horizontal';
 
             // append form group
             for(var key in controlSettings) {
@@ -55,8 +56,13 @@ angular.module('app.directives')
                 formEle.append(control);
             }
 
+            // generate button group
+            var buttonGroup = options.buttonGroup || [], needSubmit = true, needCancel = true;
+            formEle.append(generateButtonGroup(buttonGroup));
+
+            ele.append(formEle);
             // manually compile the template
-            var fn = $compile(formEle);
+            var fn = $compile(ele);
             fn($scope);
 
             // return label
@@ -88,7 +94,7 @@ angular.module('app.directives')
                 /*<div class="col-md-offset-2 col-md-10" ng-messages="editCompanyForm.serverFolder.$error">
                     <span class="help-block" ng-message="required">Server folder is required.</span>
                 </div>*/
-                var helpblock = angular.element('<div ng-messages="cusform.'+ name + '.$error"></div>');
+                var helpblock = angular.element('<div ng-messages="cusform.'+ name + '.$error" ng-show="formstate.isInvalid(\'' + name + '\')"></div>');
                 if(style === 'horizontal') helpblock.addClass('col-md-offset-2 col-md-10');
 
                 if(validates) {
@@ -101,15 +107,63 @@ angular.module('app.directives')
 
                 return helpblock;
             }
+            function generateButtonGroup(buttonGroup) {
+
+                var buttonPanel = angular.element('<div class="form-group"></div>');
+                var btnSet = angular.element('<div></div>');
+                if(style === 'horizontal') btnSet.addClass('col-md-offset-2 col-md-10');
+
+                for(var i = 0, l = buttonGroup.length; i < l; i++) {
+                    var btnOptions = buttonGroup[i], btn;
+                    if(btnOptions.isSubmit && btnOptions.click) { // onclick should be a promise
+                        // generate wrapper for submitting
+                        btnOptions.onclick = (function(btnOptions) {
+                            return function() {
+                                $scope.formstate.submitted = true;
+                                if($scope.cusform.$dirty && $scope.cusform.$valid) {
+                                    $scope.formstate.submitting = true;
+                                    // get promise
+                                    var promise = btnOptions.click($scope.eObj);
+                                    if(promise.then) {
+                                        promise.finally(function() {
+                                            $scope.formstate.submitting = false;
+                                        });    
+                                    }
+                                    else $scope.formstate.submitting = false;
+                                }
+                                else if(typeof btnOptions.onsubmitcancel === 'function') {
+                                    btnOptions.onsubmitcancel.call(null);
+                                }     
+                            }
+                        })(btnOptions);
+                    }
+                    else btnOptions.onclick = btnOptions.click;
+
+                    // generate button according the options
+                    btnSet.append(generateButton(btnOptions.text, btnOptions.className, btnOptions.onclick));
+                }
+
+                buttonPanel.append(btnSet);
+                return buttonPanel;
+            }
+            function generateButton(text, className, onclick) {
+                // <button class="btn btn-primary btn-sm" ng-click="submit()">Submit</button>
+                var btn = angular.element('<button type="button">' + text || 'Button' + '</button>');
+                if(className) btn.addClass(className);
+                if(typeof onclick === 'function') {
+                    btn.bind('click', onclick);
+                }
+
+                return btn;
+            }
         }
     };
 }])
 
 .controller('CusformController', ['$scope', '$element', '$attrs', '$transclude',
     function($scope, $element, $attrs, $transclude){
-        console.log('Controller called');
-        // var eObj = 
-        $scope.eObj = ($scope.obj && angular.copy($scope.obj)) || {};
+        
+        $scope.eObj = ($scope.editObj && angular.copy($scope.editObj)) || {};
         $scope.formstate = {
             submitting: false,
             submited: false,
