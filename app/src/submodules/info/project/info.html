@@ -1,1 +1,9 @@
-<h2>Test</h2>
+<div>
+    <h2><a ui-sref="info.company({companyId: {{CurrentCompany.companyId}}})">
+        {{CurrentCompany.name}} ({{CurrentCompany.clientId}})</a> - {{CurrentProject.name}}</h2>
+    <div class="fun-panel" ng-if="auth.isLeader()">
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
+           ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
+    </div>
+</div>
+

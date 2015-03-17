@@ -1,6 +1,6 @@
 <div ng-if="CurrentCompany">
     <h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
-    <div class="fun-panel" ng-if="auth.isAuthenticated(2)">
+    <div class="fun-panel" ng-if="auth.isLeader()">
         <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"
            ><i class="glyphicon glyphicon-plus"></i></a>
         <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
@@ -19,7 +19,7 @@
             <td>{{p.lastUpdateDate | date:'yyyy-MM-dd'}}</td>
             <td><span class="label" ng-class="statusStyle(p.status)">{{p.status | projectStatus}}</span></td>
         </tr>
-    </table>    
+    </table>
 </div>
 <div ng-if="!CurrentCompany">
     Can't fetch data from the server, please check the internet connection.

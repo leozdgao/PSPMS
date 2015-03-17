@@ -3,9 +3,6 @@
 		<div class="searchbox">
 			<input class="form-control" ng-model="filter.text" placeholder="filter...">
 			<i class="glyphicon glyphicon-search"></i>
-			<!-- <span class="input-group-btn">
-			    <button class="btn btn-default" ui-sref="info.companyAdd"><i class="glyphicon glyphicon-plus"></i></button>
-			</span> -->
 		</div>
 		<div class="list-group">
 			<a class="list-group-item" ng-repeat="company in sortedCompanies"
@@ -17,7 +14,7 @@
 		<div ui-view="content" class="company-content">
 			<div class="company-intro">
 				Choose a company to view detail.<br>
-				<span ng-if="auth.isAuthenticated(2)">Or <a ui-sref='info.companyAdd'>Add a new company</a></span>
+				<span ng-if="auth.isLeader()">Or <a ui-sref='info.companyAdd'>Add a new company</a></span>
 			</div>
 		</div>
 	</div>

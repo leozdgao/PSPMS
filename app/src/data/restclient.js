@@ -12,7 +12,8 @@ angular.module("app.datacenter", ["ngResource"])
 }])
 
 .factory("Project", ["$resource", function ($resource) {
-	return $resource("/rest/project", null, {
+	return $resource("/rest/project/:pid", null, {
+		get: { method: "GET", cache: false },
 		query: { method: "GET", isArray: true, cache: false },
 		insert: { method: "POST" },
 		update: { method: "PUT" },

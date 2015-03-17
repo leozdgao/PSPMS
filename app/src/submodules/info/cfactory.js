@@ -138,8 +138,8 @@ angular.module("app.infoModule")
             }
         },
         // return a copy of current cache
-        getAll: function() {
-            return angular.copy(cache);
-        }
+        // getAll: function() {
+        //     return angular.copy(cache);
+        // }
     }
 }]);

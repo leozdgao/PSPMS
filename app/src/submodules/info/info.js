@@ -60,7 +60,10 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
                 }
             },                
             resolve: {
-                // CurrentProject: []
+                CurrentProject: ['$stateParams', 'ProjectFactory', function($stateParams, ProjectFactory) {
+                    var pid = $stateParams.pid;
+                    return ProjectFactory.get(pid);
+                }]
             }
         });
 }])
