@@ -12,6 +12,8 @@ a:hover{ text-decoration: none; cursor: pointer; }
     margin: 0;
 }
 
+nav .side {display: none;}
+
 /*reset helpblock style*/
 .help-block {
     margin-bottom: 0px;
@@ -56,6 +58,7 @@ a:hover{ text-decoration: none; cursor: pointer; }
 
 @media screen and (max-width: 1372px) {
     body { font-size: 12px; }
+    nav .side {display: inline-block;}
     .sidebar { display: none; }
     .content { margin-left: 0; }
 }

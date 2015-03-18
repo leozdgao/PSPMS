@@ -6,6 +6,11 @@
         </a>
     </div>
     <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav side">
+            <li><a ui-sref-active="active" ui-sref="overview">Overview</a></li>
+            <li><a ui-sref-active="active" ui-sref="info">Infomation</a></li>
+            <li><a ui-sref-active="active" ui-sref="report">Report</a></li>
+        </ul>
         <!-- not auth -->
         <button class="btn btn-default navbar-btn navbar-right" ng-click="showLoginPanel()"
                 ng-hide="auth.isAuthenticated()">Login</button>
