@@ -1,9 +1,10 @@
 angular.module("app.infoModule")
 
 .factory('ProjectFactory', ['$q' ,'Project', function($q, Project){
-    var index = {}, cache = [];
+    var index = {}, cache = [], k_cache = {};
 
     return {
+        adminClientId: '3010000444',
         get: function(pid) {
             var defer = $q.defer();
 
@@ -25,6 +26,28 @@ angular.module("app.infoModule")
             else {
                 defer.resolve(null);
             } 
+
+            return defer.promise;
+        },
+        getEncryptKey: function(pid, kvs) {
+            if(!angular.isArray(kvs)) kvs = [ kvs ];
+
+            var defer = $q.defer();
+            if(k_cache[pid]) defer.resolve(k_cache[pid]);
+            else {
+                Project.getKeys(null, {kvs: kvs}).$promise
+                    .then(function(result) {
+                        // convert result
+                        var obj = {};
+                        for(var i = 0, l = result.length || 0; i < l; i++) {
+                            var kv = result[i];
+                            obj[kv.Key] = kv.Value;    
+                        }
+                        // cache
+                        k_cache[pid] = obj;
+                        defer.resolve(obj);
+                    })    
+            }
 
             return defer.promise;
         }

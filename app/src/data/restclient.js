@@ -16,6 +16,7 @@ angular.module("app.datacenter", ["ngResource"])
 		get: { method: "GET", cache: false },
 		query: { method: "GET", isArray: true, cache: false },
 		insert: { method: "POST" },
+		getKeys: { method: "POST", isArray: true, url: "/services/encryptkey" },
 		update: { method: "PUT" },
 		remove: { method: "DELETE" }
 	});

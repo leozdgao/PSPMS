@@ -86,3 +86,15 @@ angular.module('app.filters', [])
 	}
 })
 
+.filter('projectType', function() {
+	return function(project) {
+		var types = [];
+		if(project.isPlugin) types.push('Plugin');
+		if(project.isCodeBase) types.push('CodeBase');
+		if(project.isUtility) types.push('Utility');
+		if(project.isPAPI) types.push('PAPI');
+		if(project.isWebService) types.push('WebService');
+
+		if(types.length > 0) return '[ ' + types.join(' / ') + ' ]';
+	}
+})

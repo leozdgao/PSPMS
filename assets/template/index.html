@@ -20,23 +20,21 @@
     </div>
 </nav>
 
-<div class="clearfix">
-    <div class="sidebar">
-        <div class="panel panel-default">
-            <div class="list-group">
-                <a class="list-group-item" ui-sref-active="active" ui-sref="overview">
-                    <i class="glyphicon glyphicon-signal"></i> Overview</a>
-                <a class="list-group-item" ui-sref-active="active" ui-sref="info">
-                    <i class="glyphicon glyphicon-th-list"></i> Information</a>
-                <a class="list-group-item" ui-sref-active="active" ui-sref="report">
-                    <i class="glyphicon glyphicon-leaf"></i> Report</a>
-                <a class="list-group-item" ui-sref-active="active" ui-sref="admin" ng-if="auth.isAdmin()">
-                    <i class="glyphicon glyphicon-cog"></i> Manage</a>
-            </div>    
-        </div>
+<div class="sidebar">
+    <div class="panel panel-default">
+        <div class="list-group">
+            <a class="list-group-item" ui-sref-active="active" ui-sref="overview">
+                <i class="glyphicon glyphicon-signal"></i> Overview</a>
+            <a class="list-group-item" ui-sref-active="active" ui-sref="info">
+                <i class="glyphicon glyphicon-th-list"></i> Information</a>
+            <a class="list-group-item" ui-sref-active="active" ui-sref="report">
+                <i class="glyphicon glyphicon-leaf"></i> Report</a>
+            <a class="list-group-item" ui-sref-active="active" ui-sref="admin" ng-if="auth.isAdmin()">
+                <i class="glyphicon glyphicon-cog"></i> Manage</a>
+        </div>    
     </div>
-    <div class="content container-fluid" ui-view="general"></div>
 </div>
+<div class="content" ui-view="general"></div>
 
 <div class="alert-list">
     <alert ng-repeat="alert in alertModule.alerts" type="{{alert.type}}" close="alertModule.onClose(alert.key)">

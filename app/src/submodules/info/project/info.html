@@ -1,9 +1,65 @@
-<div>
+<div class="project-panel" ng-if="CurrentProject">
     <h2><a ui-sref="info.company({companyId: {{CurrentCompany.companyId}}})">
         {{CurrentCompany.name}} ({{CurrentCompany.clientId}})</a> - {{CurrentProject.name}}</h2>
-    <div class="fun-panel" ng-if="auth.isLeader()">
-        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
-           ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
+    <div class="fun-panel">
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Details"
+           ui-sref="info.company.project({companyId: CurrentCompany.companyId, pid: CurrentProject.projectId})"
+           ui-sref-active="active">
+           <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Builds"
+           ui-sref="info.company.project({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-folder-open"></i></a>
+        <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Tasks"
+           ui-sref="info.company.project({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-tasks"></i></a>
+        <a ng-if="auth.isLeader()" tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit"
+           ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
-</div>
+    <div class="project-section">
+        <div class="project-detail">
+            <div class="project-row">
+                <label for="">Assembly Name</label><span>{{CurrentProject.assemblyName}} <i class="label label-success" ng-if="!CurrentProject.isProduct">Product</i></span>
+            </div>
+            <div class="project-row">
+                <label for="">Source Code</label><span>{{CurrentProject.sourceCode}}</span>    
+            </div>
+            <div class="project-row">
+                <label for="">Start Date</label><span>{{CurrentProject.startDate | date:'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="project-row">
+                <label for="">Last Update Date</label><span>{{CurrentProject.lastUpdateDate | date:'yyyy-MM-dd'}}</span>    
+            </div>
+            <div class="project-row">
+                <label for="">Project Type</label><span>{{CurrentProject | projectType}}</span>    
+            </div>
+            <div class="project-row">
+                <label for="">Status</label>
+                <span><i class="label" ng-class="statusStyle(CurrentProject.status)">{{CurrentProject.status | projectStatus}}</i></span>    
+            </div>    
+        </div>
+        <div class="project-keys table-responsive">
+            <table class="table">
+                <tr class="active">
+                    <th class="col-md-3">ClientID</th>
+                    <th>EncryptKey</th>
+                </tr>
+                <tr>
+                    <td>{{CurrentCompany.clientId}}</td>
+                    <td>{{CurrentProject.key}}</td>
+                </tr>
+                <tr>
+                    <td>3010000444 (Test Only)</td>
+                    <td>{{CurrentProject.testKey}}</td>
+                </tr>
+            </table>    
+        </div>
 
+        <div class="project-doc">
+            
+        </div>
+    </div>
+    <div class="project-section recent-job">
+        
+    </div>
+<div ng-if="!CurrentProject">
+    Can't fetch data from the server, please check the internet connection.
+</div>

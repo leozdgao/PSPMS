@@ -1,0 +1,64 @@
+.project-section {
+    float: left;
+}
+.project-content {
+    float: left;
+}
+
+.project-panel {
+    /*position: absolute;*/
+    overflow-y: auto;
+}
+.project-panel .fun-panel {
+    margin-bottom: 0px;
+}
+.project-panel .fun-panel a.active {
+    color: #333;
+}
+
+.project-keys {
+    margin-top: 10px;
+    max-width: 800px;
+    /*clear: left;*/
+}
+.project-keys .table {
+    margin-top: 0;
+    word-wrap: break-word;
+}
+
+.project-detail {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 6px;
+    display: table;
+    width: 800px;
+}
+.project-detail .label {
+    font-style: normal;
+    font-weight: normal;
+}
+.project-row {
+    display: table-row;
+}
+.project-row label {
+    width: 25%;
+}
+.project-row label,.project-row span {
+    display: table-cell;
+    padding: 5px 0; 
+}
+
+.recent-job {
+    /*width: 200px;
+    height: 600px;
+    background: #eee;*/
+}
+
+@media screen and (max-width: 1372px) {
+    .project-detail { width: 600px; }
+    .project-keys { max-width: 620px; }
+}
+@media screen and (max-width: 650px) {
+    .project-detail { width: 400px; }   
+    .project-keys { max-width: 430px;}
+}

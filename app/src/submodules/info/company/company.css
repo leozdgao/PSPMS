@@ -80,3 +80,14 @@
 	border-radius: .5em;
 	word-wrap: break-word;
 }
+
+
+@media screen and (max-width: 1372px) {
+	.company-list { left: 0; }
+	.company-list .searchbox { left: 0 }
+}
+
+@media screen and (max-width: 924px) {
+	.company-list { display: none; }
+	.company-panel { margin-left: 0 }
+}

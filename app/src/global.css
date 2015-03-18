@@ -1,49 +1,61 @@
 html { overflow-y: hidden; }
 body {
-	/*min-width: 1200px;*/
-	font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 14px;
+    /*min-width: 1200px;*/
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
 }
+h2 { font-size: 2em }
 a:hover{ text-decoration: none; cursor: pointer; }
 
 /*reset navbar margin*/
 .navbar {
-	margin: 0;
+    margin: 0;
 }
 
 /*reset helpblock style*/
 .help-block {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+/*reset badge font*/
+.badge {
+    font-size: 0.8em;
 }
 
 .sidebar {
-	position: fixed;
-	top: 52px;
-	left: 0;
-	bottom: 0;
-	padding: 0;
-	background: #eee;
-	width: 270px;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    background: #eee;
+    width: 270px;
 }
 
 .content {
-	/*padding: 0;*/
-	margin-left: 270px;
-	/*padding-left: calc(100vw - 100%);*/
+    /*padding: 0;*/
+    margin-left: 270px;
+    /*padding-left: calc(100vw - 100%);*/
 }
 
 .admin-panel {
-	padding: 20px;	
+    padding: 20px;  
 }
 
 .alert-list {
-	z-index: 9999;
-	position: absolute;
-	top: 60px;
-	right: 15px;
-	width: 250px;
+    z-index: 9999;
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    width: 250px;
 }
 
 .alert-list .alert {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1372px) {
+    body { font-size: 12px; }
+    .sidebar { display: none; }
+    .content { margin-left: 0; }
 }

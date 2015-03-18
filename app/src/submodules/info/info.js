@@ -49,7 +49,8 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
                     templateUrl: "/template/submodules/info/company/edit.html",
                     controller: "EditCompanyController"
                 }
-            }
+            },
+            access_control: 2
         })
         .state("info.company.project", {
             url: "/:pid",
