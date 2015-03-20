@@ -6,14 +6,24 @@ angular.module("app.infoModule")
         $scope.CurrentCompany = CurrentCompany;
         $scope.statusStyle = $filter('projectStatusStyle');
 
-        ProjectFactory.getEncryptKey(CurrentProject.projectId, [
-            { clientId: CurrentCompany.clientId, assemblyName: CurrentProject.assemblyName },
-            { clientId: ProjectFactory.adminClientId, assemblyName: CurrentProject.assemblyName }
-        ]).then(function(kvs) {
-            $scope.CurrentProject.key = kvs[CurrentCompany.clientId];
-            $scope.CurrentProject.testKey = kvs[ProjectFactory.adminClientId];
-        }).catch(function() {
-            Alert.add("Can't get encrypt key.", 'danger');
-        });
+        if(CurrentProject != null && CurrentCompany != null) {
+            ProjectFactory.getEncryptKey(CurrentProject.projectId, [
+                { clientId: CurrentCompany.clientId, assemblyName: CurrentProject.assemblyName },
+                { clientId: ProjectFactory.adminClientId, assemblyName: CurrentProject.assemblyName }
+            ]).then(function(kvs) {
+                $scope.CurrentProject.key = kvs[CurrentCompany.clientId];
+                $scope.CurrentProject.testKey = kvs[ProjectFactory.adminClientId];
+            }).catch(function() {
+                Alert.add("Can't get encrypt key.", 'danger');
+            });
+
+            ProjectFactory.getDocuments(CurrentProject.projectId, CurrentCompany.name, CurrentProject.name)
+                .then(function(docs) {
+                    $scope.documents = docs;
+                })
+                .catch(function() {
+                    Alert.add("Can't get documents info.", 'danger');
+                });    
+        }
     }
 ])

@@ -1,7 +1,7 @@
 angular.module("app.infoModule")
 
-.factory('ProjectFactory', ['$q' ,'Project', function($q, Project){
-    var index = {}, cache = [], k_cache = {};
+.factory('ProjectFactory', ['$q', '$http', 'Project', function($q, $http, Project){
+    var index = {}, cache = [], k_cache = {}, d_cache = {};
 
     return {
         adminClientId: '3010000444',
@@ -46,7 +46,37 @@ angular.module("app.infoModule")
                         // cache
                         k_cache[pid] = obj;
                         defer.resolve(obj);
-                    })    
+                    })
+                    .catch(function(err) {
+                        defer.reject(err);
+                    })
+            }
+
+            return defer.promise;
+        },
+        getDocuments: function(pid, cName, pName) {
+            var defer = $q.defer();
+
+            if(d_cache[pid]) defer.resolve(d_cache[pid]);
+            else {
+                $http.get('/file/' + cName + '/' + pName + '/Documents?stat=dir')
+                    .success(function(data) {
+
+                        var results = [];
+                        if(Array.isArray(data.files)) {
+                            data.files = data.files.map(function(file) {
+                                return {
+                                    href: '/file' + file.replace(/\\/g, '/'),
+                                    name: file.split('\\').pop()
+                                }
+                            });
+                        }
+                        d_cache[pid] = data.files;
+                        defer.resolve(data.files);
+                    })
+                    .error(function(err) {
+                        defer.reject(err);
+                    });
             }
 
             return defer.promise;

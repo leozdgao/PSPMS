@@ -1,5 +1,6 @@
 .project-section {
     float: left;
+    margin-right: 30px;
 }
 .project-content {
     float: left;
@@ -8,6 +9,7 @@
 .project-panel {
     /*position: absolute;*/
     overflow-y: auto;
+    /*overflow-x: hidden;*/
 }
 .project-panel .fun-panel {
     margin-bottom: 0px;
@@ -48,6 +50,10 @@
     padding: 5px 0; 
 }
 
+.project-doc {
+    padding-left: 6px;
+}
+
 .recent-job {
     /*width: 200px;
     height: 600px;
@@ -61,4 +67,7 @@
 @media screen and (max-width: 650px) {
     .project-detail { width: 400px; }   
     .project-keys { max-width: 430px;}
+}
+@media screen and (max-width: 500px) {
+    body { font-size: 10px; }
 }

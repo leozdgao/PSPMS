@@ -17,7 +17,7 @@
     <div class="project-section">
         <div class="project-detail">
             <div class="project-row">
-                <label for="">Assembly Name</label><span>{{CurrentProject.assemblyName}} <i class="label label-success" ng-if="!CurrentProject.isProduct">Product</i></span>
+                <label for="">Assembly Name</label><span>{{CurrentProject.assemblyName}} <i class="label label-success" ng-if="CurrentProject.isProduct">Product</i></span>
             </div>
             <div class="project-row">
                 <label for="">Source Code</label><span>{{CurrentProject.sourceCode}}</span>    
@@ -52,13 +52,16 @@
                 </tr>
             </table>    
         </div>
-
         <div class="project-doc">
-            
+            <label for="">Documents</label>
+            <div class="list-group" ng-if="documents.length > 0">
+                <a class="list-group-item" ng-repeat="doc in documents" ng-href="{{doc.href}}" target="_self">{{doc.name}}</a>
+            </div>
+            <div ng-if="!documents || documents.length <= 0">No available documents.</div>
         </div>
     </div>
     <div class="project-section recent-job">
-        
+
     </div>
 <div ng-if="!CurrentProject">
     Can't fetch data from the server, please check the internet connection.
