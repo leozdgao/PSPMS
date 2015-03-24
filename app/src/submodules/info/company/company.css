@@ -16,7 +16,7 @@
 	height: 34px;
 	z-index: 2;
 }
-.company-list .glyphicon-search {
+.company-list .glyphicon-filter {
 	position: absolute;
 	top: 10px;
 	left: 10px;

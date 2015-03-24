@@ -66,6 +66,16 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
                     return ProjectFactory.get(pid);
                 }]
             }
+        })
+        .state("info.company.project.edit", {
+            url: "/edit",
+            views: {
+                "content@info": {
+                    templateUrl: "/template/submodules/info/project/edit.html",
+                    controller: "EditProjectController"
+                }
+            },
+            access_control: 2
         });
 }])
 

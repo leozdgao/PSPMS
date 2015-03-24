@@ -1,0 +1,134 @@
+<h2>Edit: {{CurrentCompany.name}} - {{CurrentProject.name}}</h2>
+<div class="fun-panel">
+    <a tooltip-trigger="mouseenter" tooltip-placement="right" tooltip="Back" ng-click="back()"><i class="glyphicon glyphicon-arrow-left"></i></a>
+</div>
+<!-- <cusform edit-obj="eObj" options="opts"></cusform> -->
+<form class="form-horizontal" name="editProjectForm" novalidate>
+    <fieldset>
+        <div class="form-group">
+            <div class="checkbox col-md-offset-2 col-md-10">
+                <label><input type="checkbox" ng-model="eObj.isProduct"> Product</label>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('companyId') }">
+            <label class="col-md-2 control-label">Company</label>
+            <div class="col-md-10">
+                <select name="companyId" class="form-control" ng-model="eObj.companyId" ng-options="company._id as company.name for company in availableCompanies" required></select>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editProjectForm.companyId.$error">
+                <span class="help-block" ng-message="required">Company is required.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('name') }">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+                <input name="name" class="form-control" ng-model="eObj.name" required>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editProjectForm.name.$error">
+                <span class="help-block" ng-message="required">Project name is required.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-show="eObj.isProduct">
+            <label class="col-md-2 control-label">Products</label>
+            <div class="col-md-10">
+                <select class="form-control" ng-change="productOnChange()" ng-model="eObj.productId" ng-options="product.projectId as product.name for product in availableProducts"></select>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('assemblyName') }">
+            <label class="col-md-2 control-label">Assembly Name</label>
+            <div class="col-md-10">
+                <input name="assemblyName" class="form-control" ng-model="eObj.assemblyName" required>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editProjectForm.assemblyName.$error">
+                <span class="help-block" ng-message="required">Assembly name is required.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('startDate') }">
+            <label class="col-md-2 control-label">Start Date</label>
+            <div class="col-md-10">
+                <div class="input-group">
+                    <input name="startDate" class="form-control" ng-model="eObj.startDate" is-open="startDateOpts.opened" datepicker-options="startDateOpts.dateOptions" datepicker-popup="yyyy-MM-dd" ng-required="true" ng-date="true" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="startDateOpts.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span> 
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editProjectForm.startDate.$error">
+                <span class="help-block" ng-message="required">Start date is required.</span>
+                <span class="help-block" ng-message="date">Invalid date</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': formstate.isInvalid('lastUpdateDate') }">
+            <label class="col-md-2 control-label">Last Update Date</label>
+            <div class="col-md-10">
+                <div class="input-group">
+                    <input name="lastUpdateDate" class="form-control" ng-model="eObj.lastUpdateDate" is-open="lastUpdateDateOpts.opened" datepicker-options="lastUpdateDateOpts.dateOptions" datepicker-popup="yyyy-MM-dd" ng-required="true" ng-date="true" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="lastUpdateDateOpts.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span> 
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-10" ng-messages="editProjectForm.lastUpdateDate.$error">
+                <span class="help-block" ng-message="required">Last update date is required.</span>
+                <span class="help-block" ng-message="date">Invalid date</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Status</label>
+            <div class="col-md-10">
+                <select name="status" class="form-control" ng-model="eObj.status" ng-options="status.id as status.name for status in projectStatus"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">SourceCode</label>
+            <div class="col-md-10">
+                <input name="sourceCode" class="form-control" ng-model="eObj.sourceCode">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Server Folder</label>
+            <div class="col-md-10">
+                <input name="serverFolder" class="form-control" ng-model="eObj.serverFolder">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Perforce Folder</label>
+            <div class="col-md-10">
+                <input name="perforceFolder" class="form-control" ng-model="eObj.perforceFolder">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="row">
+                    <div class="checkbox col-md-5">
+                        <label><input type="checkbox" ng-model="eObj.isPlugin"> IsPlugin</label>
+                    </div>
+                    <div class="checkbox col-md-5">
+                        <label><input type="checkbox" ng-model="eObj.isCodeBase"> IsCodeBase</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox col-md-5">
+                        <label><input type="checkbox" ng-model="eObj.isUtility"> IsUtility</label>
+                    </div>
+                    <div class="checkbox col-md-5">
+                        <label><input type="checkbox" ng-model="eObj.isPAPI"> IsPAPI</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox col-md-5">
+                        <label><input type="checkbox" ng-model="eObj.isWebService"> IsWebService</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-primary btn-sm" ng-click="submit()">Submit</button>
+                <button class="btn btn-success btn-sm" ng-click="reset()">Reset</button>
+                <button class="btn btn-default btn-sm" ng-click="back()">Cancel</button>
+                <button class="btn btn-danger btn-sm pull-right">Remove</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

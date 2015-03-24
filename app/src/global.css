@@ -1,4 +1,4 @@
-html { overflow-y: hidden; }
+html { /*overflow-y: hidden; */}
 body {
     /*min-width: 1200px;*/
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;

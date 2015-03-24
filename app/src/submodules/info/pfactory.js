@@ -29,6 +29,16 @@ angular.module("app.infoModule")
 
             return defer.promise;
         },
+        set: function(pid, newProject) {
+            // upload change, it needn't change the lastmodify
+            return Project.update({pid: pid}, {update: newProject}).$promise
+                        .then(function(result) {
+                            var project = result.new, i = index[pid];
+                            if(i >=0 && cache[i]) {
+                                cache[i] = project;
+                            }
+                        });
+        },
         getEncryptKey: function(pid, kvs) {
             if(!angular.isArray(kvs)) kvs = [ kvs ];
 

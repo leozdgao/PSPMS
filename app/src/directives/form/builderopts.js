@@ -42,25 +42,17 @@ angular.module('app.directives')
                 serverFolder: {
                     label: "Server Folder",
                     attrs: {
-                        "ng-required": true,
                         "tooltip-trigger": "focus",
                         "tooltip-placement": "right",
                         tooltip: '"Folder name on server 208."'
-                    },
-                    validate: {
-                        required: "Server folder is requied."
                     }
                 }, 
                 perforceFolder: {
                     label: "Perforce Folder",
                     attrs: {
-                        "ng-required": true,
                         "tooltip-trigger": "focus",
                         "tooltip-placement": "right",
                         tooltip: '"Folder name on P4v."'
-                    },
-                    validate: {
-                        required: "Perforce folder is requied."
                     }
                 } 
             },
@@ -80,4 +72,94 @@ angular.module('app.directives')
             ]
         }
     }
+}])
+
+.factory('ProjectFormOptions', [function(){
+    return function (){
+        return {
+            formClass: "form-horizontal",
+            keys: {
+                isProduct: {
+                    label: "Product",
+                    type: "checkbox"
+                },
+                name: {
+                    label: "Name",
+                    attrs: {
+                        "ng-required": true
+                    },
+                    validate: {
+                        required: "Project name is required."
+                    }
+                },
+                products: {
+                    bind: false,
+                    lable: "Products",
+                    type: "dropdownlist"
+                },
+                assemblyName: {
+                    label: "Assembly Name",
+                    attrs: {
+                        "ng-required": true
+                    },
+                    validate: {
+                        required: "Assembly name is required."
+                    }
+                },
+                startDate: {
+                    label: "Start Date",
+                    type: "date",
+                    defaultVal: Date.now(),
+                    attrs: {
+                        "ng-required": true
+                    },
+                    validate: {
+                        required: "Start date is required."
+                    }
+                },
+                lastUpdateDate: {
+                    label: "Last Update Date",
+                    type: "date",
+                    defaultVal: Date.now(),
+                    attrs: {
+                        "ng-required": true
+                    },
+                    validate: {
+                        required: "Last update date is required."
+                    }
+                },
+                sourceCode: {
+                    label: "SourceCode"
+                },
+                serverFolder: {
+                    label: "Server Folder",
+                    attrs: {
+                        "tooltip-trigger": "focus",
+                        "tooltip-placement": "right",
+                        tooltip: '"Folder name on server 208."'
+                    }
+                }, 
+                perforceFolder: {
+                    label: "Perforce Folder",
+                    attrs: {
+                        "tooltip-trigger": "focus",
+                        "tooltip-placement": "right",
+                        tooltip: '"Folder name on P4v."'
+                    }
+                } 
+            },
+            buttonGroup: [
+                {
+                    isSubmit: true,
+                    text: "Submit",
+                    className: "btn btn-primary btn-sm",
+                    click: function() {}
+                },{
+                    text: "Cancel",
+                    className: "btn btn-default btn-sm",
+                    click: function() {}
+                }
+            ]
+        }
+    };
 }])

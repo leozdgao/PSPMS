@@ -49,8 +49,18 @@ angular.module('app.directives')
                 var control = angular.element(
                     '<div class="form-group" ng-class="{' + '\'has-error\': formstate.isInvalid(\'' + key + '\') }">' +
                     '</div>');
-                control.append(getLabel(key, settings.label));
-                control.append(getInputString(key, settings.type, settings.attrs));
+                switch(settings.type) {
+                    case 'text': {
+                        control.append(getLabel(key, settings.label));
+                        control.append(getInputString(key, settings.attrs));
+                        break;
+                    }
+                    case 'checkbox': {
+                        control.append(getCheckbox(key, settings.label, settings.attrs));
+                        break;
+                    }
+                }
+                
                 control.append(getHelpblock(key, settings.validate));
 
                 formEle.append(control);
@@ -65,6 +75,10 @@ angular.module('app.directives')
             var fn = $compile(ele);
             fn($scope);
 
+            function getInput(name, settings) {
+
+            }
+
             // return label
             function getLabel(name, text) {
                 var label = angular.element('<label class="control-label" for="'+ name +'">' + text + '</label>');
@@ -72,21 +86,34 @@ angular.module('app.directives')
                 return label;
             }
             // return input according type
-            function getInputString(name, type, attrs) {
-                var text = '<div><input class="form-control"' +
-                ' name="' + name + '"' + ' ng-model="eObj.' + name + '"';
+            function getInputString(name, attrs) {
+                var input = angular.element('<div>'); 
+                
+                if(style === 'horizontal') input.addClass('col-md-10');
+                var textbox = angular.element(generate(name, 'text', attrs));
+                textbox.addClass('form-control');
+                input.append(textbox);
 
-                // TODO: other type
+                return input;
+            }
+            // return checkbox 
+            function getCheckbox(name, label, attrs) {
+                var input = angular.element('<div>');
+
+                if(style === 'horizontal') input.addClass('col-md-offset-2 col-md-5');
+                var checkbox = angular.element('<div class="checkbox"><label>' + generate(name, 'checkbox', attrs) + ' ' + label + '</label></div>');
+                input.append(checkbox);
+
+                return input;
+            }
+            function generate(name, type, attrs) {
+                var text = '<input '+ ' type=' + type + ' name="' + name + '"' + ' ng-model="eObj.' + name + '"';
 
                 for(var val in attrs) {
                     text += (' ' + val + '=' + attrs[val]);
                 }
-                text += ('></div>');
 
-                var input = angular.element(text); 
-                if(style === 'horizontal') input.addClass('col-md-10');
-                
-                return input;
+                return text += '>';
             }
             // return help-block related to ng-messages
             function getHelpblock(name, validates) {

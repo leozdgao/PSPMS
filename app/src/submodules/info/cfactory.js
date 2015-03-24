@@ -4,6 +4,7 @@ angular.module("app.infoModule")
     var index = {}, cache = [], p_cache = {};
     var lastupdate, lastmodify; // flags for company tree updating
     var countChange = false, filter = { text: "" };
+    // var getall = false;
 
     return {
         filter: filter,

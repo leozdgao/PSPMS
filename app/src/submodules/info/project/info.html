@@ -12,7 +12,7 @@
         <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Tasks"
            ui-sref="info.company.project({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-tasks"></i></a>
         <a ng-if="auth.isLeader()" tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit"
-           ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a>
+           ui-sref="info.company.project.edit({companyId: CurrentCompany.companyId, pid: CurrentProject.projectId})"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div class="project-section">
         <div class="project-detail">

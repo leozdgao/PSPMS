@@ -44,7 +44,7 @@ angular.module("app.infoModule")
             };
             // cancel btn options
             opts.buttonGroup[1].click = function() {
-                $state.go('info.company', {companyId: CurrentCompany.companyId});
+                $state.go('^');
             };
             // extra remove btn
             opts.buttonGroup[2] = {
