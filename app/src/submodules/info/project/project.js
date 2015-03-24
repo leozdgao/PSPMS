@@ -34,6 +34,7 @@ angular.module("app.infoModule")
         ProjectFormOptions, DatepickerOption, MessageBox, Alert) {
         if(CurrentCompany === null || CurrentProject === null) $state.go('info');
         else {
+            var companyChanged = false;
             $scope.CurrentCompany = CurrentCompany;
             $scope.CurrentProject = CurrentProject;
 
@@ -63,10 +64,17 @@ angular.module("app.infoModule")
             });
 
             $scope.submit = function() {
+                if(!$scope.editProjectForm.$dirty) {
+                    $state.go('^');
+                    return;
+                }
+
                 $scope.formstate.submited = true;
-                if($scope.editProjectForm.$dirty && $scope.editProjectForm.$valid) {
+                if($scope.editProjectForm.$valid) {
                     $scope.formstate.submitting = true;
-                    ProjectFactory.set(CurrentProject.projectId, $scope.eObj)
+                    var newCid;
+                    if(companyChanged) newCid = $scope.eObj.companyId; console.log(newCid);
+                    ProjectFactory.set(CurrentProject.projectId, $scope.eObj, newCid)
                         .then(function() {
                             $state.transitionTo('info.company.project',
                                 {companyId: CurrentCompany.companyId, pid: CurrentProject.projectId}, {reload: true});
@@ -113,6 +121,11 @@ angular.module("app.infoModule")
                     if(!newVal) {
                         $scope.eObj.productId = void(0);
                     }
+                }
+            });
+            $scope.$watch('eObj.companyId', function(newVal, oldVal) {
+                if(newVal != oldVal) {
+                    companyChanged = !(newVal == CurrentCompany._id);
                 }
             });
         }

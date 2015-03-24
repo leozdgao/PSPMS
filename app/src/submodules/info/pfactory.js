@@ -29,15 +29,25 @@ angular.module("app.infoModule")
 
             return defer.promise;
         },
-        set: function(pid, newProject) {
+        set: function(pid, newProject, newCid) {
             // upload change, it needn't change the lastmodify
-            return Project.update({pid: pid}, {update: newProject}).$promise
-                        .then(function(result) {
-                            var project = result.new, i = index[pid];
-                            if(i >=0 && cache[i]) {
-                                cache[i] = project;
-                            }
-                        });
+            var promise;
+            if(newCid) {
+                promise = Project.updateCompany({pid: pid}, { companyId: newCid }).$promise
+                    .then(function() {
+                        return Project.update({pid: pid}, {update: newProject}).$promise
+                    });                    
+            }
+            else {
+                promise = Project.update({pid: pid}, {update: newProject}).$promise;
+            }
+             
+            return promise.then(function(result) {
+                        var project = result.new, i = index[pid];
+                        if(i >=0 && cache[i]) {
+                            cache[i] = project;
+                        }
+                    });           
         },
         getEncryptKey: function(pid, kvs) {
             if(!angular.isArray(kvs)) kvs = [ kvs ];

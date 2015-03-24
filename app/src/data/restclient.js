@@ -18,6 +18,7 @@ angular.module("app.datacenter", ["ngResource"])
 		insert: { method: "POST" },
 		getKeys: { method: "POST", isArray: true, url: "/services/encryptkey" },
 		update: { method: "PUT" },
+		updateCompany: { method: "PUT", url: "/rest/project/:pid/company" },
 		remove: { method: "DELETE" }
 	});
 }])
