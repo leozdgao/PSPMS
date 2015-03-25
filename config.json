@@ -3,7 +3,7 @@
     "proxy": true,
     "proxyDic": {
     	"/user": "http://10.10.73.209:1339",
-        "/rest": "http://localhost:1339",
+        "/rest": "http://10.10.73.209:1339",
         "/file": "http://10.10.73.208:8000",
         "/services": "http://10.10.73.207:9001"
     }
