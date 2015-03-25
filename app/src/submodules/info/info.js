@@ -52,6 +52,16 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
             },
             access_control: 2
         })
+        .state("info.company.addProject", {
+            url: "/addproject",
+            views: {
+                "content@info": {
+                    templateUrl: "/template/submodules/info/project/edit.html",
+                    controller: "AddProjectController"
+                }
+            },
+            access_control: 2
+        })
         .state("info.company.project", {
             url: "/:pid",
             views: {
@@ -63,6 +73,7 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
             resolve: {
                 CurrentProject: ['$stateParams', 'ProjectFactory', function($stateParams, ProjectFactory) {
                     var pid = $stateParams.pid;
+
                     return ProjectFactory.get(pid);
                 }]
             }

@@ -78,9 +78,9 @@ angular.module("app.infoModule")
         // submit btn options
         opts.buttonGroup[0].click = function(data) {
             return CompanyFactory.add(data)
-                .then(function() {
+                .then(function(company) {
                     // redirect to state 'info'
-                    $state.transitionTo('info', null, {reload: true});
+                    $state.transitionTo('info.company', { companyId: company.companyId }, {reload: true});
                 })
                 .catch(function(e) { // handle exception
                     Alert.add(e.msg || 'Error occurred while add new company.', 'danger');

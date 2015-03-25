@@ -15,11 +15,11 @@ angular.module("app.datacenter", ["ngResource"])
 	return $resource("/rest/project/:pid", null, {
 		get: { method: "GET", cache: false },
 		query: { method: "GET", isArray: true, cache: false },
-		insert: { method: "POST" },
+		insert: { method: "POST", isArray: true },
 		getKeys: { method: "POST", isArray: true, url: "/services/encryptkey" },
 		update: { method: "PUT" },
 		updateCompany: { method: "PUT", url: "/rest/project/:pid/company" },
-		remove: { method: "DELETE" }
+		remove: { method: "DELETE", isArray: true }
 	});
 }])
 

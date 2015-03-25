@@ -28,106 +28,87 @@ angular.module("app.infoModule")
     }
 ])
 
-.controller('EditProjectController', ['$scope', '$state', '$filter', 'CurrentCompany', 'CurrentProject', 'CompanyFactory', 'ProjectFactory',
+.controller('EditProjectController', ['$scope', '$state', 'CurrentCompany', 'CurrentProject', 'CompanyFactory', 'ProjectFactory',
     'ProjectFormOptions', 'DatepickerOption', 'MessageBox', 'Alert',
-    function($scope, $state, $filter, CurrentCompany, CurrentProject, CompanyFactory, ProjectFactory,
+    function($scope, $state, CurrentCompany, CurrentProject, CompanyFactory, ProjectFactory,
         ProjectFormOptions, DatepickerOption, MessageBox, Alert) {
         if(CurrentCompany === null || CurrentProject === null) $state.go('info');
         else {
-            var companyChanged = false;
             $scope.CurrentCompany = CurrentCompany;
             $scope.CurrentProject = CurrentProject;
 
-            $scope.formstate = {
-                submitting: false,
-                submited: false,
-                isInvalid: function(key) {
-                    return (this.submited || $scope.editProjectForm[key].$dirty) && $scope.editProjectForm[key].$invalid;
-                }
-            };
-
             $scope.eObj = angular.copy(CurrentProject);
-            $scope.startDateOpts = new DatepickerOption();
-            $scope.lastUpdateDateOpts = new DatepickerOption();
-            $scope.projectStatus = [0,1,2,3,4,9].map(function(id) {
-                return {
-                    id: id,
-                    name: $filter('projectStatus')(id)
-                }
-            });
-            CompanyFactory.refresh().then(function(companies) {
-                $scope.availableCompanies = companies;    
-            });
-            // get products
-            CompanyFactory.getProjectsBasic(1146).then(function(products) {
-                $scope.availableProducts = products;
-            });
 
+            var newCid, companyChanged = false;;
             $scope.submit = function() {
-                if(!$scope.editProjectForm.$dirty) {
-                    $state.go('^');
-                    return;
-                }
-
-                $scope.formstate.submited = true;
-                if($scope.editProjectForm.$valid) {
-                    $scope.formstate.submitting = true;
-                    var newCid;
-                    if(companyChanged) newCid = $scope.eObj.companyId; console.log(newCid);
-                    ProjectFactory.set(CurrentProject.projectId, $scope.eObj, newCid)
-                        .then(function() {
+                if(companyChanged) newCid = $scope.eObj.companyId;
+                return ProjectFactory.set(CurrentProject.projectId, $scope.eObj, newCid)
+                        .then(function(result) { console.log(cid);
+                            var cid = result[1]; // maybe change company
                             $state.transitionTo('info.company.project',
-                                {companyId: CurrentCompany.companyId, pid: CurrentProject.projectId}, {reload: true});
+                                {companyId: cid || CurrentCompany.companyId, pid: CurrentProject.projectId}, {reload: true});
                         })
                         .catch(function(e) {
-                            Alert.add(e.msg || 'Error occurred while submit company.', 'danger');
-                        })
-                        .finally(function() {
-                            $scope.formstate.submitting = false;
+                            Alert.add(e.msg || 'Error occurred while submit project.', 'danger');
                         });
-                }
-            }
-            $scope.reset = function() {
-                $scope.eObj = angular.copy(CurrentProject);
             }
             $scope.back = function() {
                 $state.go('^'); // back to parent state
+            }   
+            $scope.reset = function() {
+                $scope.eObj = angular.copy(CurrentProject);
             }
             $scope.remove = function() {
                 MessageBox.show("Remove this project?", { style: 'confirm' })
                     .then(function() {
-
+                        ProjectFactory.remove(CurrentProject.projectId, CurrentCompany.companyId)
+                            .then(function(result) {
+                                $state.transitionTo('info.company', { companyId: result }, {reload: true});
+                            })
+                            .catch(function(e) {
+                                Alert.add(e.msg || 'Error occurred while submit project.', 'danger');
+                            });
                     });
             }
-            $scope.productOnChange = function() {
-                var mergeKeys = [ "assemblyName", "sourceCode", "serverFolder", "perforceFolder", "isPlugin",
-                                  "isCodeBase", "isUtility", "isPAPI", "isWebService" ];
-                ProjectFactory.get($scope.eObj.productId)
-                    .then(function(result) { 
-                        for(var i in mergeKeys) {
-                            var key = mergeKeys[i];
-                            if(result.hasOwnProperty(key)) {
-                                $scope.eObj[key] = result[key];
-                            }
-                        }
-                    })
-                    .catch(function(err) {
-                        Alert.add(err.msg || "Get product info failed.", 'danger');
-                    });
-            }
-
-            $scope.$watch('eObj.isProduct', function(newVal, oldVal) {
-                if(newVal != oldVal) {
-                    if(!newVal) {
-                        $scope.eObj.productId = void(0);
-                    }
-                }
-            });
             $scope.$watch('eObj.companyId', function(newVal, oldVal) {
                 if(newVal != oldVal) {
-                    companyChanged = !(newVal == CurrentCompany._id);
+                    companyChanged = true;
                 }
             });
         }
     }
-]);
+])
+
+.controller('AddProjectController', ['$scope', '$state', '$filter', 'CurrentCompany', 'ProjectFactory', 'Alert',
+    function($scope, $state, $filter, CurrentCompany, ProjectFactory, Alert){
+        if(CurrentCompany === null) $state.go('info');
+        else {
+            var defaultVal = {
+                companyId: CurrentCompany._id,
+                startDate: $filter('date')(new Date(), 'yyyy-MM-dd'),
+                lastUpdateDate: $filter('date')(new Date(), 'yyyy-MM-dd'),
+                status: 1
+            }
+            $scope.CurrentCompany = CurrentCompany;
+            $scope.isNew = true;
+            $scope.eObj = angular.copy(defaultVal);
+
+            $scope.submit = function() {
+                return ProjectFactory.add($scope.eObj)
+                        .then(function(result) {
+                            $state.transitionTo('info.company.project',
+                                {companyId: CurrentCompany.companyId || CurrentCompany.companyId, pid: result.projectId}, {reload: true});
+                        })
+                        .catch(function(e) {
+                            Alert.add(e.msg || 'Error occurred while submit project.', 'danger');
+                        });
+            };
+            $scope.back = function() {
+                $state.go('^'); // back to parent state
+            };  
+            $scope.reset = function() {
+                $scope.eObj = angular.copy(defaultVal);
+            };
+        }
+    }
+])

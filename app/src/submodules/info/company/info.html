@@ -2,7 +2,7 @@
     <h2>{{CurrentCompany.name}} ({{CurrentCompany.clientId}})</h2>
     <div class="fun-panel" ng-if="auth.isLeader()">
         <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Add project"
-           ><i class="glyphicon glyphicon-plus"></i></a>
+           ui-sref="info.company.addProject"><i class="glyphicon glyphicon-plus"></i></a>
         <a tooltip-placement="top" tooltip-trigger="mouseenter" tooltip="Edit company"
            ui-sref="info.company.edit({companyId: CurrentCompany.companyId})"><i class="glyphicon glyphicon-new-window"></i></a> 
     </div>

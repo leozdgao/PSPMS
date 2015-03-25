@@ -2,7 +2,7 @@
     <button class="close" ng-click="form.close()"><span>&times;</span></button>
     <h4 class="modal-title">Login</h4>
 </div>
-<div class="modal-body container-fluid">
+<div class="modal-body container-fluid" ng-keyup="form.keyup($event)">
 	<form  name="loginForm" novalidate style="margin-top: 20px;">
 		<fieldset ng-disabled="form.requesting">
 			<div class="row">
