@@ -1,6 +1,6 @@
-var app = angular.module("pspms", ['ngCookies', 'ui.router',
+var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.datacenter',
                                    'app.directives', 'app.auth', 'app.filters',
-                                   'app.admin', 'app.infoModule']);
+                                   'app.admin', 'app.infoModule', 'app.reportModule']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "Alert",
     function($rootScope, $state, $stateParams, $location, $cookies, AuthService, UserService, Alert){
@@ -77,20 +77,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationP
                     isLogged: 'RelogService'
                 },
                 access_control: 0
-            })
-            .state("report", {
-                url: "/report",
-                views: {
-                    "": {
-                        templateUrl: "/template/index.html"
-                    }               
-                },
-                resolve: {
-                    isLogged: 'RelogService'
-                },
-                access_control: 1
             });
-            
 
         $urlRouterProvider.otherwise("/");
 

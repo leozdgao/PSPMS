@@ -1,0 +1,19 @@
+.report-panel {
+	padding: 10px 0 0 10px;
+}
+
+.report-content {
+	position: relative;
+}
+.report-content .datetimer {
+	display:inline-block; 
+	min-height: 290px;
+	float: left;
+}
+.report-content .daily-console {
+	padding: 10px 20px;
+	float: left;
+}
+.report-content .daily-overview {
+	margin-top: 10px;
+}

@@ -1,4 +1,4 @@
-angular.module("app.infoModule")
+angular.module("app.datacenter")
 
 .factory('CompanyFactory', ['$q' ,'Company', function($q, Company){
     var index = {}, cache = [], p_cache = {};

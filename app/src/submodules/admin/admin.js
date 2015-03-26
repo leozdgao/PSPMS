@@ -1,4 +1,4 @@
-angular.module('app.admin', ['app.datacenter', 'app.directives'])
+angular.module('app.admin', ['ui.router', 'app.auth', 'app.datacenter', 'app.directives'])
 
 .config(['$stateProvider', function($stateProvider) {
 	$stateProvider

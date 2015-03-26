@@ -1,4 +1,4 @@
-angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directives'])
+angular.module("app.infoModule", ['ui.router', 'ngMessages', 'app.auth', 'app.datacenter', 'app.directives'])
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider
@@ -25,7 +25,8 @@ angular.module("app.infoModule", ['ngMessages', 'app.datacenter', 'app.directive
                     templateUrl: "/template/submodules/info/company/add.html",
                     controller: "AddCompanyController"
                 }
-            }
+            },
+            access_control: 2
         })
         .state("info.company", {
             url: "/:companyId",

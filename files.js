@@ -17,6 +17,7 @@ module.exports = {
 		"app/src/app.js",
 		"app/src/auth/auth.js",
 		"app/src/data/restclient.js",
+		"app/src/data/**/*.js",
 		"app/src/directives/directive.js",
 		"app/src/directives/**/*.js",
 		"app/src/filters/filter.js",

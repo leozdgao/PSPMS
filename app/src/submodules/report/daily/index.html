@@ -1,0 +1,17 @@
+<div class="daily-header clearfix">
+	<div class="datetimer">
+	    <datepicker ng-model="dt" class="well well-sm"></datepicker>
+	</div>
+	<div class="daily-console">
+		<button class="btn btn-sm btn-default">Refresh</button>
+		<button class="btn btn-sm btn-success" ng-click="reset()">Reset</button>
+		<div class="daily-overview">
+			<label>Daily overview</label>
+			<div ng-if="jobs.length <= 0">No jobs information.</div>
+			<div ng-if="jobs.length > 0"></div>
+		</div>
+	</div>
+</div>
+<div class="daily-panel">
+	<!-- waterfall -->
+</div>

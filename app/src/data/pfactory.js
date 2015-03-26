@@ -1,4 +1,4 @@
-angular.module("app.infoModule")
+angular.module("app.datacenter")
 
 .factory('ProjectFactory', ['$q', '$http', '$filter', 'Project', 'CompanyFactory',
     function($q, $http, $filter, Project, CompanyFactory){        
