@@ -43,6 +43,7 @@ nav .side {display: none;}
 .content {
     /*padding: 0;*/
     margin-left: 270px;
+    margin-top: 52px;
     /*padding-left: calc(100vw - 100%);*/
 }
 

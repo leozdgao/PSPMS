@@ -39,11 +39,11 @@ angular.module("app.infoModule")
 
             $scope.eObj = angular.copy(CurrentProject);
 
-            var newCid, companyChanged = false;;
+            var newCid, companyChanged = false;
             $scope.submit = function() {
                 if(companyChanged) newCid = $scope.eObj.companyId;
                 return ProjectFactory.set(CurrentProject.projectId, $scope.eObj, newCid)
-                        .then(function(result) { console.log(cid);
+                        .then(function(result) {
                             var cid = result[1]; // maybe change company
                             $state.transitionTo('info.company.project',
                                 {companyId: cid || CurrentCompany.companyId, pid: CurrentProject.projectId}, {reload: true});

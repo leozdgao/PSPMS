@@ -48,7 +48,7 @@ app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthS
                 if(ac && !AuthService.isAuthenticated(ac)) {
 
                     Alert.add("You have no access to it.", "danger");
-                    if(from.abstract) { $state.go('^'); }
+                    if(from.abstract) { $state.go('overview'); }
                     else {
                         $state.go(from.name, fromParams);    
                     }

@@ -43,10 +43,8 @@
 
 .company-panel {
 	margin-left: 270px;
-	padding: 0 20px;
+	padding: 10px 20px 0;
 	position: relative;
-	top: 52px;
-	bottom: 0;
 	/*min-width: 600px;*/
 }
 .company-panel .company-content {
