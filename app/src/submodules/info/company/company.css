@@ -35,9 +35,9 @@
 .company-list .badge {
 	position: absolute;
 	top: 50%;
-	left: 100%;
+	right: 0;
 	margin-top: -9px;
-	margin-left: -26px;
+	margin-right: 6px;
 	background: #aaa;
 }
 
@@ -79,7 +79,6 @@
 	border-radius: .5em;
 	word-wrap: break-word;
 }
-
 
 @media screen and (max-width: 1372px) {
 	.company-list { left: 0; }

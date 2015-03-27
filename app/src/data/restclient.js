@@ -32,7 +32,17 @@ angular.module("app.datacenter", ["ngResource"])
 		createAccount: { method: "POST", url: "/user/signup" },
 		resetAccount: { method: "POST", url: "/user/resetaccount" }
 	});
-}]);
+}])
+
+.factory("Job", ['$resource', function($resource) {
+	return $resource("/rest/job/:id", null, {
+		get: { method: "GET", cache: false },
+		query: { method: "GET", isArray: true, cache: false },
+		insert: { method: "POST" },
+		update: { method: "PUT" },
+		remove: { method: "DELETE" }
+	});
+}])
 
 // .factory('Session', ['$resource', function($resource){
 // 	return $resource("/proxy/rest/session", null, {

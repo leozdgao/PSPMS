@@ -7,8 +7,18 @@
 }
 .report-content .datetimer {
 	display:inline-block; 
-	min-height: 290px;
 	float: left;
+	position: relative;
+}
+.report-content .datetimer .backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 20px;
+	right: 0;
+	background: #eee;
+	z-index: 100;
+	opacity: 0.5;
 }
 .report-content .daily-console {
 	padding: 10px 20px;
@@ -16,4 +26,26 @@
 }
 .report-content .daily-overview {
 	margin-top: 10px;
+}
+
+.daily-panel {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.report-job-panel {
+	float: left;
+	margin: 0 10px 10px 10px;
+}
+.report-job-panel .panel-heading {
+	font-weight: bold;
+}
+
+@media screen and (max-width: 645px) {
+	.report-job-panel { float: none; }
+	.report-content .daily-console { padding-left: 0; }
+}
+
+@media screen and (min-width: 645px) {
+	.report-job-panel { width: 300px; }
 }

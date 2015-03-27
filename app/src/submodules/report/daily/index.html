@@ -1,17 +1,35 @@
 <div class="daily-header clearfix">
 	<div class="datetimer">
 	    <datepicker ng-model="dt" class="well well-sm"></datepicker>
+	    <div class="backdrop" ng-show="requesting"></div>
 	</div>
 	<div class="daily-console">
-		<button class="btn btn-sm btn-default">Refresh</button>
+		<button class="btn btn-sm btn-default" ng-click="refresh()">Refresh</button>
 		<button class="btn btn-sm btn-success" ng-click="reset()">Reset</button>
+		<button class="btn btn-sm btn-primary" ng-click="export()">Export</button>
 		<div class="daily-overview">
 			<label>Daily overview</label>
 			<div ng-if="jobs.length <= 0">No jobs information.</div>
-			<div ng-if="jobs.length > 0"></div>
+			<div ng-if="jobs.length > 0">
+				<p>{{resource}}</p>
+				<p>Total: {{total}}</p>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="daily-panel">
-	<!-- waterfall -->
+	<div class="panel panel-default report-job-panel" ng-repeat="project in projectJobs">
+		<div class="panel-heading">{{project.name}} <a class="pull-right">View Detail</a></div>
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="job in project.jobs">
+				<p>{{job.startDate | date:'yyyy-MM-dd'}} -- {{job.endDate | date:'yyyy-MM-dd'}}
+					<span class="label pull-right" ng-class="JobStatusStyle(job.status)">{{job.status | JobStatus }}</span> 
+				</p>
+				<label>Description</label>
+				<p>{{job.description || '...' }}</p>
+				<label>Resource</label>
+				<p>{{(job.workers | resource) || '...'}}</p>
+			</li>
+		</ul>
+	</div>
 </div>
