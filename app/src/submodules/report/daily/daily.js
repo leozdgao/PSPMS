@@ -30,10 +30,13 @@ angular.module("app.reportModule")
 
     function getJobOfDay(date) {
         $scope.requesting = true;
-        JobFactory.getJobOfDay(new Date(date)).then(function(result) {
+        // reset
+        $scope.projectJobs = [];
+        $scope.jobs = [];
+        var day = new Date(date);
+        JobFactory.getJobOfDay(day, day).then(function(result) {
             $scope.jobs = result;
             $scope.resource = $filter('resource').apply(null, result.map(function(r) { return r.workers }));
-            $scope.requesting = false;
 
             $scope.total = getTotalWorkTime(result);
 
@@ -61,6 +64,9 @@ angular.module("app.reportModule")
         })
         .catch(function(err) {
             Alert.add('Failed to get jobs.', 'danger');
+        })
+        .finally(function() {
+            $scope.requesting = false;
         })
     }
 
