@@ -29,23 +29,41 @@
 }
 
 .daily-panel {
-	margin-left: -10px;
-	margin-right: -10px;
+	
 }
 
 .report-job-panel {
-	float: left;
-	margin: 0 10px 10px 10px;
+	/*float: left;*/
+	/*margin: 0 10px 10px 10px;*/
+	margin-bottom: 15px; 
 }
 .report-job-panel .panel-heading {
 	font-weight: bold;
 }
 
-@media screen and (max-width: 645px) {
+.wf-container:after {
+	display: table;
+	content: '';
+	clear: both;
+}
+.wf-column {
+	float: left;
+	padding: 0 15px 0 0;
+}
+
+.weekly-header {
+	margin: 15px 0;
+}
+.weekly-overview {
+	margin-top: 15px;
+	padding-left: 15px;
+}
+
+/*@media screen and (max-width: 645px) {
 	.report-job-panel { float: none; }
 	.report-content .daily-console { padding-left: 0; }
 }
 
 @media screen and (min-width: 645px) {
 	.report-job-panel { width: 300px; }
-}
+}*/

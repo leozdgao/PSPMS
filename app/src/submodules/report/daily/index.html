@@ -17,8 +17,8 @@
 		</div>
 	</div>
 </div>
-<div class="daily-panel">
-	<div class="panel panel-default report-job-panel" ng-repeat="project in projectJobs">
+<div class="daily-panel wf-container" waterfall source="projectJobs">
+	<div class="panel panel-default report-job-panel wf-box" ng-repeat="project in projectJobs">
 		<div class="panel-heading">{{project.name}} <a class="pull-right">View Detail</a></div>
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="job in project.jobs">

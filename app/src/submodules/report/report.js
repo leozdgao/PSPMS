@@ -26,7 +26,8 @@ angular.module("app.reportModule", ['ui.router', 'app.auth'])
 			url: "/weekly",
 			views: {
 				"report-content": {
-					templateUrl: "/template/submodules/report/weekly/index.html"
+					templateUrl: "/template/submodules/report/weekly/index.html",
+					controller: "WeeklyReportController"
 				}
 			},
 			access_control: 1

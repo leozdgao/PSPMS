@@ -1,6 +1,7 @@
 angular.module("app.reportModule")
 
-.controller('DailyReportController', ['$scope', '$filter', 'JobFactory', 'Alert', function($scope, $filter, JobFactory, Alert){
+.controller('DailyReportController', ['$scope', '$filter', 'JobFactory', 'Alert',
+    function($scope, $filter, JobFactory, Alert){
 
     $scope.dt = new Date();
     $scope.jobs = [];
@@ -20,7 +21,7 @@ angular.module("app.reportModule")
     }
     $scope.$watch('dt', function(newVal, oldVal) {
         if(newVal !== oldVal) {
-            getJobOfDay(newVal);
+            getJobOfDay(newVal, newVal);
         }
     });
 
@@ -77,7 +78,7 @@ angular.module("app.reportModule")
             job.workers = job.workers || [];
             job.workers.forEach(function(worker) {
                 result += worker.hour;
-            })
+            });
         });
         return result;
     }
