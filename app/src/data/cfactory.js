@@ -1,7 +1,7 @@
 angular.module("app.datacenter")
 
 .factory('CompanyFactory', ['$q' ,'Company', function($q, Company){
-    var index = {}, cache = [], p_cache = {};
+    var index = {}, index_id = {}, cache = [], p_cache = {};
     var lastupdate, lastmodify; // flags for company tree updating
     var countChange = false, filter = { text: "" };
     // var getall = false;
@@ -29,6 +29,10 @@ angular.module("app.datacenter")
             
             return defer.promise;
         },
+        getById: function(id) {
+            var i = index_id[id];
+            if(i >= 0 && cache[i]) return cache[i];
+        },
         add: function(newCompany) {
             // add a new company, and change the lastmodify
             return Company.insert(null, newCompany).$promise
@@ -36,6 +40,7 @@ angular.module("app.datacenter")
                             // add to cache
                             cache.push(addedCompany);
                             index[addedCompany.companyId] = cache.length - 1;
+                            index_id[addedCompany._id] = cache.length - 1;
 
                             return addedCompany;
                         });
@@ -53,6 +58,7 @@ angular.module("app.datacenter")
                     for(var i = 0, l = cache.length; i < l; i++) {
                         var company = cache[i];
                         index[company.companyId] = i;
+                        index_id[company._id] = i;
                     }
                 }
             }
@@ -112,6 +118,7 @@ angular.module("app.datacenter")
                         for(var i = 0, l = companies.length; i < l; i++) {
                             var company = companies[i];
                             index[company.companyId] = i;
+                            index_id[company._id] = i;
                         }
                         // set expire date
                         lastupdate = Date.now();

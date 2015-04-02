@@ -59,6 +59,16 @@
 	padding-left: 15px;
 }
 
+.panel-heading .left {
+	margin-right: 80px;
+	/*float: left;*/
+}
+.panel-heading .right {
+	float: right;
+	width: 80px;
+	text-align: right;
+}
+
 /*@media screen and (max-width: 645px) {
 	.report-job-panel { float: none; }
 	.report-content .daily-console { padding-left: 0; }

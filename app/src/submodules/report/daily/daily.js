@@ -1,7 +1,7 @@
 angular.module("app.reportModule")
 
-.controller('DailyReportController', ['$scope', '$filter', 'JobFactory', 'Alert',
-    function($scope, $filter, JobFactory, Alert){
+.controller('DailyReportController', ['$scope', '$filter', 'CompanyFactory', 'JobFactory', 'Alert',
+    function($scope, $filter, CompanyFactory, JobFactory, Alert){
 
     $scope.dt = new Date();
     $scope.jobs = [];
@@ -56,6 +56,8 @@ angular.module("app.reportModule")
                 else {
                     project = angular.copy(job.projectId);
                     project.jobs = [job];
+                    var company = CompanyFactory.getById(project.companyId);
+                    project.companyName = company && company.name;
                     projectJobs.push(project);
                 }
             });

@@ -17,7 +17,10 @@ angular.module("app.reportModule", ['ui.router', 'app.auth'])
                 }
             },
             resolve: {
-                isLogged: 'RelogService'
+                isLogged: 'RelogService',
+                companies: ['CompanyFactory', function(CompanyFactory) {
+                	return CompanyFactory.refresh();
+                }]
             },
             // abstract: true,
             access_control: 1

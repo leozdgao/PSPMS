@@ -1,7 +1,7 @@
 angular.module("app.reportModule")
 
-.controller('WeeklyReportController', ['$scope', '$filter', 'JobFactory', 'Alert', 'DatepickerOption',
-	function($scope, $filter, JobFactory, Alert, DatepickerOption) {
+.controller('WeeklyReportController', ['$scope', '$filter', 'CompanyFactory', 'JobFactory', 'Alert', 'DatepickerOption',
+	function($scope, $filter, CompanyFactory, JobFactory, Alert, DatepickerOption) {
 		// $scope.from = getDayOfWeek(new Date(), -3);
 		// $scope.to = getDayOfWeek(new Date(), 3);
 		$scope.fromDateOpts = new DatepickerOption();
@@ -62,16 +62,19 @@ angular.module("app.reportModule")
 
 		            if(project) {
 		                project.jobs.push(job);
-		            } 
+		            }
 		            else {
 		                project = angular.copy(job.projectId);
 		                project.jobs = [job];
-		                projectJobs.push(project);
+		                var company = CompanyFactory.getById(project.companyId);
+                		project.companyName = company && company.name;
+                		projectJobs.push(project);
 		            }
 		        });
 		        $scope.projectJobs = projectJobs.sort(function(a, b) {
 		            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 		        });
+		        console.log($scope.projectJobs);
 		    })
 		    .catch(function(err) {
 		        Alert.add('Failed to get jobs.', 'danger');

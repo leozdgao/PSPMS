@@ -4,6 +4,7 @@ var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.datacenter',
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "Alert",
     function($rootScope, $state, $stateParams, $location, $cookies, AuthService, UserService, Alert){
+
         $rootScope.$stateParams = $stateParams;
         $rootScope.$state = $state;
 
