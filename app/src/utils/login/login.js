@@ -1,4 +1,4 @@
-angular.module("app.directives")
+angular.module("app.utils")
 
 .factory('LoginPanel', ['$modal', function($modal){
 	var modalInstance;
@@ -6,7 +6,7 @@ angular.module("app.directives")
 	return {
 		show: function(onLogin) {
 			modalInstance = $modal.open({
-				templateUrl: "/template/directives/login/template.html",
+				templateUrl: "/template/utils/login/template.html",
 				controller: "LoginPanelController",
 				resolve: {
 					onLogin: function() {

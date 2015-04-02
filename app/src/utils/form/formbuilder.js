@@ -1,4 +1,4 @@
-angular.module('app.directives')
+angular.module('app.utils')
 
 .directive('cusform', ['$compile', function($compile){
     // Runs during compile

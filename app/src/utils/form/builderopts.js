@@ -1,4 +1,4 @@
-angular.module('app.directives')
+angular.module('app.utils')
 
 /* Form builder options
 *  - name: name of the form

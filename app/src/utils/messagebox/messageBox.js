@@ -1,4 +1,4 @@
-angular.module('app.directives')
+angular.module('app.utils')
 
 .factory('MessageBox', ['$modal',
     function($modal) {
@@ -17,7 +17,7 @@ angular.module('app.directives')
                 angular.extend(option, opt);
 
                 modalInstance = $modal.open({
-                    templateUrl: '/template/directives/messagebox/template.html',
+                    templateUrl: '/template/utils/messagebox/template.html',
                     controller: 'MessageBoxController',
                     resolve: {
                         item: function() {

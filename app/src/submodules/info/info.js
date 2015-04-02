@@ -1,4 +1,4 @@
-angular.module("app.infoModule", ['ui.router', 'ngMessages', 'app.auth', 'app.datacenter', 'app.directives'])
+angular.module("app.infoModule", ['ui.router', 'ngMessages', 'app.auth', 'app.datacenter', 'app.utils'])
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider

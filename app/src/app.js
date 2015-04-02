@@ -1,5 +1,5 @@
 var app = angular.module("pspms", ['ngCookies', 'ui.router', 'app.datacenter',
-                                   'app.directives', 'app.auth', 'app.filters',
+                                   'app.utils', 'app.auth', 'app.filters',
                                    'app.admin', 'app.infoModule', 'app.reportModule']);
 
 app.run(["$rootScope", "$state", "$stateParams", "$location", "$cookies", "AuthService", "UserService", "Alert",

@@ -1,4 +1,4 @@
-angular.module('app.directives')
+angular.module('app.utils')
 
 .factory('wfInstance', [function(){
 
