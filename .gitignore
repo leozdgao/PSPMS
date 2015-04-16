@@ -39,5 +39,5 @@ public
 
 # assets
 assets/release
-assets/template/directives
+assets/template/utils
 assets/template/submodules
